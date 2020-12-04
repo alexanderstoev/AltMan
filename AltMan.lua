@@ -84,7 +84,7 @@ end
 ----------------------------------------------------------------------------
 function AltMan:RefreshCharacterData() 
     -- refresh the current character data
-    AltManDB.alts[UnitGUID('player')] = self:GetCurrentCharacterData(); -- TODO: Check for alts property
+    AltManDB.alts[UnitGUID('player')] = self:GetCurrentCharacterData();
     AltMan:LoadAlts(AltManDB.alts);
 end
 
