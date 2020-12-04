@@ -34,6 +34,10 @@ AltMan.DataSources.dungeonquests = function ()
         if (C_QuestLog.IsComplete(questID)) then
             table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["done"]);
         
+        -- check if the quest is marked as completed
+        elseif (C_QuestLog.IsQuestFlaggedCompleted(questID)) then
+            table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["done"]);
+
         -- check if we have the quest in the log
         elseif (not(C_QuestLog.GetLogIndexForQuestID(questID) == nil)) then
             table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["notdone"]);
