@@ -44,7 +44,7 @@ function AltMan:GetContents()
     for k, v in pairs(AltMan.Alts) do
         local frame = CreateFrame("frame", "", self.frame);
         
-        frame:SetFrameStrata("high");
+        frame:SetFrameStrata("MEDIUM");
         
         frame:SetWidth(AltMan.constants.presentation.table.cellwidth);
         frame:SetHeight(AltMan.constants.presentation.frame.height);
@@ -68,6 +68,7 @@ end
 function AltMan:GetCloseButton()
     self.frame.closeButton = CreateFrame("Button", "CloseButton", self.frame, "UIPanelCloseButton");
 	self.frame.closeButton:ClearAllPoints();
+	self.frame.closeButton:SetFrameStrata("HIGH");
 	self.frame.closeButton:SetPoint("TOPRIGHT", 0, 0);
 	self.frame.closeButton:SetScript("OnClick", function() AltMan:HideInterface(); end);
 end
