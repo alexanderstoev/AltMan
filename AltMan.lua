@@ -64,7 +64,7 @@ function AltMan:OnLoad()
     
     -- always reset the current addon version
     -- In the future this will be used for data migtation to newer versions
-    AltManDB["version"] = "0.1";
+    AltManDB["version"] = "0.0.1";
     
     -- check if we have any data loaded
     if (AltManDB.alts == nil) then
