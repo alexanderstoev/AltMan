@@ -16,6 +16,10 @@ AltMan.translations = {
             ["resquesouls"] = "Resque souls",
             ["animaquest"] = "Refill anima",
             ["soulash"] = "Soul ash"
-        }
+        },
+        ["done"] = "Done",
+        ["notdone"] = "To do",
+        ["notfound"] = "Not found",
+        ["secondquestnotfound"] = "Second quest not found",
     }
 }

@@ -19,7 +19,7 @@ AltMan.DataSources.animaquest = function ()
 
         -- check if the quest is marked as completed
         if (C_QuestLog.IsComplete(questID)) then
-            return "Y";
+            return AltMan.translations["en"]["done"];
         end
 
         -- check if we have the quest in the log
@@ -31,5 +31,5 @@ AltMan.DataSources.animaquest = function ()
         end
     end
 
-    return "Not found";
+    return AltMan.translations["en"]["notfound"];
 end
