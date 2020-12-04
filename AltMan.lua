@@ -65,11 +65,8 @@ function AltMan:OnLoad()
     if (AltManDB.alts == nil) then
         AltManDB.alts = {}
     end
-    
     -- refresh the current character data
     AltMan:RefreshCharacterData();
-    
-    AltMan:LoadAlts(AltManDB.alts);
     
     AltMan:InitFrame();
     
