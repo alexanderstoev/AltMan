@@ -33,12 +33,12 @@ AltMan.DataSources.dungeonquests = function ()
         -- check if the quest is marked as completed
         if (C_QuestLog.IsComplete(questID)) then
             table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["done"]);
-        end
         
         -- check if we have the quest in the log
-        if (not(C_QuestLog.GetLogIndexForQuestID(questID) == nil)) then
+        elseif (not(C_QuestLog.GetLogIndexForQuestID(questID) == nil)) then
             table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["notdone"]);
         end
+        
     end
 
     local foundQuests = sizeOfTable(returnSrings);
@@ -48,6 +48,6 @@ AltMan.DataSources.dungeonquests = function ()
     if (foundQuests == 1) then 
         table.insert(returnSrings, AltMan.translations["en"]["secondquestnotfound"])
     end
-    
+
     return table.concat(returnSrings, "\n");
 end
