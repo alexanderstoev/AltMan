@@ -13,7 +13,7 @@ AltMan.translations = {
             ["covenantcalling"] = "Covenant callings",
             ["mythicplus"] = "Mythic +",
             ["dungeonquests"] = "Dungeon quests",
-            ["resquesouls"] = "Resque souls",
+            ["rescuesouls"] = "Rescue souls",
             ["animaquest"] = "Refill anima",
             ["soulash"] = "Soul ash"
         },

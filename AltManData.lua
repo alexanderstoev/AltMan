@@ -11,7 +11,7 @@ AltMan.altActivities.daily = {
     "mawdailies", "worldquests", "covenantcalling" -- daily activities
 }
 AltMan.altActivities.weekly = {
-    "mythicplus", "dungeonquests", "resquesouls", "animaquest", "soulash" -- weekly activities
+    "mythicplus", "dungeonquests", "rescuesouls", "animaquest", "soulash" -- weekly activities
 }
 
 function AltMan:GetCurrentCharacterData()
