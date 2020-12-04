@@ -10,5 +10,5 @@ AltMan.constants.presentation.frame.paddingVertical = 30
 AltMan.constants.presentation.frame.paddingHorizontal = 10
 
 AltMan.constants.presentation.table = {}
-AltMan.constants.presentation.table.cellwidth = 130
-AltMan.constants.presentation.table.cellheight = 20
+AltMan.constants.presentation.table.cellwidth = 160
+AltMan.constants.presentation.table.cellheight = 30
