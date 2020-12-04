@@ -57,6 +57,11 @@ end
 ----------------------------------------------------------------------------
 function AltMan:OnLoad()
     
+
+    if (AltManDB == nil) then
+        AltManDB = {}
+    end
+    
     -- always reset the current addon version
     -- In the future this will be used for data migtation to newer versions
     AltManDB["version"] = "0.1";
@@ -79,7 +84,7 @@ end
 ----------------------------------------------------------------------------
 function AltMan:RefreshCharacterData() 
     -- refresh the current character data
-    AltManDB.alts[UnitGUID('player')] = self:GetCurrentCharacterData();
+    AltManDB.alts[UnitGUID('player')] = self:GetCurrentCharacterData(); -- TODO: Check for alts property
     AltMan:LoadAlts(AltManDB.alts);
 end
 
