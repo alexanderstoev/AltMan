@@ -3,8 +3,15 @@
 ## Notes: Alts menagerie overview and tracking.
 ## Author: ZodiakBG
 ## Version: 0.0.1
+## SavedVariables: AltManDB
+
+AltManHelpers.lua
+
+DataSources/coreCharacter.lua
+DataSources/mythicplus.lua
 
 AltManTranslations.lua
 AltManConst.lua
 AltManData.lua
+AltManUI.lua
 AltMan.lua

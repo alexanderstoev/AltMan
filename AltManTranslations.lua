@@ -11,6 +11,7 @@ AltMan.translations = {
             ["mawdailies"] = "Maw dailies",
             ["worldquests"] = "World Quests",
             ["covenantcalling"] = "Covenant callings",
+            ["mythicplus"] = "Mythic +",
             ["dungeonquests"] = "Dungen quests",
             ["resquesouls"] = "Resque souls",
             ["animaquest"] = "Refill anima",
