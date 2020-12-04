@@ -1,0 +1,7 @@
+## Interface: 90002
+## Title: AltMan
+## Notes: Alts menagerie overview and tracking.
+## Author: ZodiakBG
+## Version: 0.0.1
+
+AltMan.lua
