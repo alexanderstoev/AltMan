@@ -13,6 +13,7 @@ AltMan.DataSources.animaquest = function ()
         61982,
         61983,
         61984,
+        62441,
     }
     
     for _, questID in pairs(questIDs) do 
