@@ -21,10 +21,14 @@ AltMan.DataSources.animaquest = function ()
         -- check if the quest is marked as completed
         if (C_QuestLog.IsComplete(questID)) then
             return AltMan.translations["en"]["done"];
-        end
+            
+            -- check if the quest is marked as completed
+        elseif (C_QuestLog.IsQuestFlaggedCompleted(questID)) then
+            return AltMan.translations["en"]["done"];
+
 
         -- check if we have the quest in the log
-        if (not(C_QuestLog.GetLogIndexForQuestID(questID) == nil)) then
+        elseif (not(C_QuestLog.GetLogIndexForQuestID(questID) == nil)) then
             local data = C_QuestLog.GetQuestObjectives(questID)[1]
             if (not(data == nil)) then
                 return data.numFulfilled .. "/" .. data.numRequired;
