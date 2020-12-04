@@ -1,5 +1,9 @@
 local _, AltMan = ...;
 
+-- used to store references to frames
+AltMan.Frames = {}
+AltMan.Frames.alts = {}
+
 ----------------------------------------------------------------------------
 -- Displays the main frame of the addon
 ----------------------------------------------------------------------------
@@ -22,6 +26,7 @@ function AltMan:InitFrame()
     self.frame:SetPoint("CENTER",0,0);
     
     self:DrawCloseButton();
+    self:DrawBackgroundFrames();
 end
 
 
@@ -64,35 +69,43 @@ end
 
 
 ----------------------------------------------------------------------------
--- Prepares and renders all data 
+-- Renders frames for each alt 
 ----------------------------------------------------------------------------
-function AltMan:DrawContents()
-
-    -- print labels column
-    self:PrintColumn(AltMan.translations["en"]["labels"], self.frame, false);
-
-    -- print alt data
+function AltMan:DrawBackgroundFrames()
+  
     local numberOfAlts = 0;
     for currentAltKey, currentAlt in pairs(AltMan.Alts) do
 
         numberOfAlts = numberOfAlts + 1;
 
-        local frame = CreateFrame("frame", "", self.frame);
-        
-        frame:SetFrameStrata("MEDIUM");
-        
-        frame:SetWidth(AltMan.constants.presentation.table.cellwidth);
-        frame:SetHeight(AltMan.constants.presentation.frame.height);
-        
-        frame:SetPoint("TOPLEFT", AltMan.constants.presentation.table.cellwidth * (numberOfAlts), 0);
+        self.Frames.alts[currentAltKey] = CreateFrame("frame", "", self.frame);
+        self.Frames.alts[currentAltKey]:SetWidth(AltMan.constants.presentation.table.cellwidth);
+        self.Frames.alts[currentAltKey]:SetHeight(AltMan.constants.presentation.frame.height);
+        self.Frames.alts[currentAltKey]:SetFrameStrata("MEDIUM");
+        self.Frames.alts[currentAltKey]:SetPoint("TOPLEFT", AltMan.constants.presentation.table.cellwidth * (numberOfAlts), 0);
+
         if (math.fmod(numberOfAlts, 2) == 1) then
-            frame.background = frame:CreateTexture(nil, "BACKGROUND");
-            frame.background:SetAllPoints();
-            frame.background:SetDrawLayer("ARTWORK", 1);
-            frame.background:SetColorTexture(0, 0, 0, 0.7);   
+            self.Frames.alts[currentAltKey].background = self.Frames.alts[currentAltKey]:CreateTexture(nil, "BACKGROUND");
+            self.Frames.alts[currentAltKey].background:SetAllPoints();
+            self.Frames.alts[currentAltKey].background:SetDrawLayer("ARTWORK", 1);
+            self.Frames.alts[currentAltKey].background:SetColorTexture(0, 0, 0, 0.7);   
         end
-        self:PrintColumn(currentAlt, frame, true);
+        
     end
+end
+
+
+----------------------------------------------------------------------------
+-- Prepares and prints all data 
+----------------------------------------------------------------------------
+function AltMan:PrintData()
+    -- print labels column
+    self:PrintColumn(AltMan.translations["en"]["labels"], self.frame, false);
+    
+    for currentAltKey, currentAlt in pairs(AltMan.Alts) do
+        self:PrintColumn(currentAlt, self.Frames.alts[currentAltKey], true);
+    end
+
 end
 
 

@@ -37,7 +37,7 @@ function AltMan:Show()
     AltMan:RefreshCharacterData();
 
     self:ShowFrame();
-    self:DrawContents();
+    self:PrintData();
     
     shown = true;
 
