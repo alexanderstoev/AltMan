@@ -7,6 +7,7 @@
 
 AltManHelpers.lua
 
+DataSources/anima.lua
 DataSources/coreCharacter.lua
 DataSources/mythicplus.lua
 
