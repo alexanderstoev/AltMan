@@ -11,3 +11,11 @@ function sizeOfTable(t)
 	for k, v in pairs(t) do items = items + 1 end
 	return items
 end
+
+
+----------------------------------------------------------------------------
+-- remove trailing and leading whitespace from string.
+----------------------------------------------------------------------------
+function trim(s)
+	return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
