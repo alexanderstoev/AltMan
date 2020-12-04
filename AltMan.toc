@@ -4,4 +4,7 @@
 ## Author: ZodiakBG
 ## Version: 0.0.1
 
+AltManTranslations.lua
+AltManConst.lua
+AltManData.lua
 AltMan.lua
