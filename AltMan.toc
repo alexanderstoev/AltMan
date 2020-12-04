@@ -7,6 +7,7 @@
 
 AltManHelpers.lua
 
+DataSources/soulash.lua
 DataSources/rescuesouls.lua
 DataSources/anima.lua
 DataSources/dungeonquests.lua
