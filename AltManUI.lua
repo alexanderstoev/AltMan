@@ -3,6 +3,8 @@ local _, AltMan = ...;
 -- used to store references to frames
 AltMan.Frames = {}
 AltMan.Frames.alts = {}
+AltMan.Texts = {}
+AltMan.Texts.alts = {}
 
 ----------------------------------------------------------------------------
 -- Displays the main frame of the addon
@@ -27,6 +29,7 @@ function AltMan:InitFrame()
     
     self:DrawCloseButton();
     self:DrawBackgroundFrames();
+    self:PrintData()
 end
 
 
@@ -99,43 +102,76 @@ end
 -- Prepares and prints all data 
 ----------------------------------------------------------------------------
 function AltMan:PrintData()
-    -- print labels column
-    self:PrintColumn(AltMan.translations["en"]["labels"], self.frame, false);
     
+    -- print labels column
+    self:RenderColumn(AltMan.translations["en"]["labels"], self.frame, false, "labels");
+    
+    -- fillin the labels. They won't change
+    for _, dataKey in pairs(AltMan.altData) do
+        AltMan.Texts.alts["labels"][dataKey]:SetText(AltMan.translations["en"]["labels"][dataKey]);
+    end
+    for _, dataKey in pairs(AltMan.altActivities.daily) do
+        AltMan.Texts.alts["labels"][dataKey]:SetText(AltMan.translations["en"]["labels"][dataKey]);
+    end
+    for _, dataKey in pairs(AltMan.altActivities.weekly) do
+        AltMan.Texts.alts["labels"][dataKey]:SetText(AltMan.translations["en"]["labels"][dataKey]);
+    end
+
+    -- print the alts columns
     for currentAltKey, currentAlt in pairs(AltMan.Alts) do
-        self:PrintColumn(currentAlt, self.Frames.alts[currentAltKey], true);
+        -- print("currentAltKey", currentAltKey)
+        self:RenderColumn(currentAlt, self.Frames.alts[currentAltKey], true, currentAltKey);
     end
 
 end
 
 
 ----------------------------------------------------------------------------
--- Prints the data for a column section
+-- Prints a colum
+-- A labels colum or an alt colummn
+----------------------------------------------------------------------------
+function AltMan:RenderColumn(dataObj, parent, isAltColumn, currentAltKey)
+    local row = 0;
+    row = self:RenderColumnSection(AltMan.altData, row, dataObj, parent, isAltColumn, currentAltKey);
+    row = row + 1;
+    row = self:RenderColumnSection(AltMan.altActivities.daily, row, dataObj, parent, isAltColumn, currentAltKey);
+    row = row + 1;
+    row = self:RenderColumnSection(AltMan.altActivities.weekly, row, dataObj, parent, isAltColumn, currentAltKey);
+end
+
+
+----------------------------------------------------------------------------
+-- Creates texts for a column section
 -- sections: core data, daily and weekly activities
 ----------------------------------------------------------------------------
-function AltMan:PrintColumnSection(section, row, dataObj, parent, isAltColumn)
+function AltMan:RenderColumnSection(section, row, dataObj, parent, isAltColumn, currentAltKey)
     
     local currentRow = row;
     local rowHeight = AltMan.constants.presentation.table.cellheight;
     
     for _, altDataKey in pairs(section) do
-        local fontString = parent:CreateFontString(nil, nil, "GameFontNormalSmall");
-        fontString:SetPoint("TOPLEFT", AltMan.constants.presentation.frame.paddingHorizontal + 0, - AltMan.constants.presentation.frame.paddingVertical - currentRow * rowHeight);
+
+        if (AltMan.Texts.alts[currentAltKey] == nil) then
+            AltMan.Texts.alts[currentAltKey] = {}
+        end
+        
+        AltMan.Texts.alts[currentAltKey][altDataKey] = parent:CreateFontString(nil, nil, "GameFontNormalSmall");
+        AltMan.Texts.alts[currentAltKey][altDataKey]:SetPoint("TOPLEFT", AltMan.constants.presentation.frame.paddingHorizontal + 0, - AltMan.constants.presentation.frame.paddingVertical - currentRow * rowHeight);
         if (currentRow == 0 and isAltColumn) then
             local altClass = dataObj['class'];
             altClass = string.gsub(altClass, "%s+", ""); -- remove spaces e.g. Demon hunter -> Demonhunter
             altClass = string.upper(altClass); -- transform to uppercase e.g. Demonhunter -> DEMONHUNTER
 
-            fontString:SetTextColor(
+            AltMan.Texts.alts[currentAltKey][altDataKey]:SetTextColor(
                 RAID_CLASS_COLORS[altClass].r,
                 RAID_CLASS_COLORS[altClass].g,
                 RAID_CLASS_COLORS[altClass].b,
                 RAID_CLASS_COLORS[altClass].a   
             );
-            fontString:SetFont("Fonts\\FRIZQT__.TTF", 15);
+            AltMan.Texts.alts[currentAltKey][altDataKey]:SetFont("Fonts\\FRIZQT__.TTF", 15);
         end
-        fontString:SetText(dataObj[altDataKey]);
-        fontString:SetJustifyH("LEFT");
+
+        AltMan.Texts.alts[currentAltKey][altDataKey]:SetJustifyH("LEFT");
         currentRow = currentRow + 1;
     end
 
@@ -144,14 +180,21 @@ end
 
 
 ----------------------------------------------------------------------------
--- Prints a colum
--- A labels colum or an alt colummn
+-- Updates texts for a column section
+-- sections: core data, daily and weekly activities
 ----------------------------------------------------------------------------
-function AltMan:PrintColumn(dataObj, parent, isAltColumn)
-    local row = 0;
-    row = self:PrintColumnSection(AltMan.altData, row, dataObj, parent, isAltColumn);
-    row = row + 1;
-    row = self:PrintColumnSection(AltMan.altActivities.daily, row, dataObj, parent, isAltColumn);
-    row = row + 1;
-    row = self:PrintColumnSection(AltMan.altActivities.weekly, row, dataObj, parent, isAltColumn);
+function AltMan:PrintAltsData()
+    
+    for currentAltKey, currentAlt in pairs(AltMan.Alts) do
+        for _, dataKey in pairs(AltMan.altData) do
+            AltMan.Texts.alts[currentAltKey][dataKey]:SetText(currentAlt[dataKey]);
+        end
+        for _, dataKey in pairs(AltMan.altActivities.daily) do
+            AltMan.Texts.alts[currentAltKey][dataKey]:SetText(currentAlt[dataKey]);
+        end
+        for _, dataKey in pairs(AltMan.altActivities.weekly) do
+            AltMan.Texts.alts[currentAltKey][dataKey]:SetText(currentAlt[dataKey]);
+        end
+    end
+
 end
