@@ -8,6 +8,7 @@
 AltManHelpers.lua
 
 DataSources/anima.lua
+DataSources/dungeonquests.lua
 DataSources/coreCharacter.lua
 DataSources/mythicplus.lua
 
