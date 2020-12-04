@@ -122,6 +122,7 @@ function AltMan:PrintColumnSection(section, row, dataObj, parent, isAltColumn)
             fontString:SetFont("Fonts\\FRIZQT__.TTF", 15);
         end
         fontString:SetText(dataObj[altDataKey]);
+        fontString:SetJustifyH("LEFT");
         currentRow = currentRow + 1;
     end
 
