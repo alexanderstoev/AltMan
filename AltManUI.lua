@@ -77,7 +77,7 @@ end
 function AltMan:DrawBackgroundFrames()
   
     local numberOfAlts = 0;
-    for currentAltKey, currentAlt in pairs(AltMan.Alts) do
+    for currentAltKey, currentAlt in spairs(AltMan.Alts, function(t,a,b) return t[b].level < t[a].level end) do
 
         numberOfAlts = numberOfAlts + 1;
 
