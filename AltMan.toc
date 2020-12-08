@@ -17,7 +17,7 @@ DataSources/coreCharacter.lua
 DataSources/mythicplus.lua
 
 AltManTranslations.lua
-AltManConst.lua
 AltManData.lua
-AltManUI.lua
+UI/AltManConst.lua
+UI/AltManUI.lua
 AltMan.lua
