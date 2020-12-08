@@ -5,6 +5,12 @@ local shown = false; -- used to track if we have the window shown
 local ADDON_NAME = "AltMan";
 
 local main_frame = CreateFrame("frame", "AltManFrame", UIParent);
+
+main_frame:RegisterForDrag("LeftButton");
+main_frame:SetMovable(); 
+main_frame:SetScript("OnDragStart", main_frame.StartMoving)
+main_frame:SetScript("OnDragStop", main_frame.StopMovingOrSizing)
+
 main_frame:RegisterEvent("ADDON_LOADED");
 main_frame:RegisterEvent("PLAYER_LEAVING_WORLD");
 main_frame:SetScript("OnEvent", function(self, ...) 
@@ -37,7 +43,7 @@ function AltMan:Show()
     AltMan:RefreshCharacterData();
 
     self:ShowFrame();
-    self:PrintAltsData()
+    -- self:PrintAltsData()
     
     shown = true;
 
