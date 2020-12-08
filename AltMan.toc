@@ -7,6 +7,8 @@
 
 AltManHelpers.lua
 
+DataSources/global/weeklyreset.lua
+DataSources/global/dailyreset.lua
 DataSources/mawdailies.lua
 DataSources/covenantcalling.lua
 DataSources/soulash.lua
