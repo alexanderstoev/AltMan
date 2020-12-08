@@ -32,6 +32,18 @@ function AltMan:SetBackground(parent)
     parent["background"] = parent:CreateTexture(nil, "BACKGROUND");
     parent["background"]:SetAllPoints();
     parent["background"]:SetDrawLayer("ARTWORK", 1);
-    parent["background"]:SetColorTexture(0, 0, 0, AltMan.constants.presentation.frame.alpha);
+    
+    if (r == nil) then --if we don't have red value - assuming black (0,0,0)
+        r=0
+        b=0
+        g=0
+    elseif(g == nil) then -- if we have red value, but nor blue - then assuming gray (r,r,r)
+        b=r
+        g=r
+    end
+
+    parent["background"]:SetColorTexture(r, g, b, AltMan.constants.presentation.frame.alpha);
+end
+ 
 end
  
