@@ -23,7 +23,7 @@ function AltMan:InitFrame()
     self.frame.background = self.frame:CreateTexture(nil, "BACKGROUND");
 	self.frame.background:SetAllPoints();
 	self.frame.background:SetDrawLayer("ARTWORK", 1);
-	self.frame.background:SetColorTexture(0, 0, 0, 0.7);
+	self.frame.background:SetColorTexture(0, 0, 0, AltMan.constants.presentation.frame.alpha);
     
     self.frame:SetPoint("CENTER",0,0);
     
