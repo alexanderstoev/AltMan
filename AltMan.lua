@@ -42,7 +42,7 @@ function AltMan:Show()
     -- refresh the current character data
     AltMan:RefreshCharacterData();
 
-    self:ShowFrame();
+    AltMan.UI:ShowFrame();
     -- self:PrintAltsData()
     
     shown = true;
@@ -53,7 +53,7 @@ end
 -- Hides the main frame of the addon
 ----------------------------------------------------------------------------
 function AltMan:Hide()
-    self:HideFrame();
+    AltMan.UI:HideFrame();
     shown = false;
 end
 
@@ -79,7 +79,7 @@ function AltMan:OnLoad()
     -- refresh the current character data
     AltMan:RefreshCharacterData();
     
-    AltMan:InitFrame();
+    AltMan.UI:InitFrame();
     
 end
 

@@ -1,19 +1,21 @@
 local _, AltMan = ...
 
+AltMan.UI = AltMan.UI or {}
+
 ----------------------------------------------------------------------------
 -- Creates a new string
 ----------------------------------------------------------------------------
-function AltMan:CreateNewString(name, parent, horizontal, vertical, isHeading)
+function AltMan.UI:CreateNewString(name, parent, horizontal, vertical, isHeading)
     parent[name] = parent:CreateFontString(nil, nil, "GameFontNormalSmall");
     parent[name]:SetPoint("TOPLEFT", horizontal, vertical);
-    AltMan:SetStringFormatting(parent[name], isHeading);
+    AltMan.UI:SetStringFormatting(parent[name], isHeading);
 end
 
 
 ----------------------------------------------------------------------------
 -- sets common formating to strings
 ----------------------------------------------------------------------------
-function AltMan:SetStringFormatting(stringToFormat, isHeading)
+function AltMan.UI:SetStringFormatting(stringToFormat, isHeading)
     
     local fontSize = AltMan.constants.presentation.fontSize;
     if (isHeading) then
@@ -28,7 +30,7 @@ end
 ----------------------------------------------------------------------------
 -- sets the background to a frame
 ----------------------------------------------------------------------------
-function AltMan:SetBackground(parent, r, g, b)
+function AltMan.UI:SetBackground(parent, r, g, b)
     parent["background"] = parent:CreateTexture(nil, "BACKGROUND");
     parent["background"]:SetAllPoints();
     parent["background"]:SetDrawLayer("ARTWORK", 1);
@@ -49,14 +51,14 @@ end
 ----------------------------------------------------------------------------
 -- Shortcut method to increase the main frame height
 ----------------------------------------------------------------------------
-function AltMan:IncreaseMainFrameHeight(increase)
-    AltMan:IncreaseFrameHeight(AltMan.frame, increase);
+function AltMan.UI:IncreaseMainFrameHeight(increase)
+    AltMan.UI:IncreaseFrameHeight(AltMan.frame, increase);
 end
 
 
 ----------------------------------------------------------------------------
 -- Increases the height of a providede frame
 ----------------------------------------------------------------------------
-function AltMan:IncreaseFrameHeight(frame, increase)
+function AltMan.UI:IncreaseFrameHeight(frame, increase)
     frame:SetHeight(frame:GetHeight() + increase);
 end
