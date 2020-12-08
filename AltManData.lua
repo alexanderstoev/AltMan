@@ -37,7 +37,12 @@ end
 
 
 function AltMan:LoadAlts(alts)
-    AltMan.Alts = alts;
-    AltMan.TotalAlts = sizeOfTable(alts);
+    AltMan.Alts = {}
+    for altKey, alt in pairs(alts) do
+        if alt.level == 60 then
+            AltMan.Alts[altKey] = alt;
+        end
+    end
+    AltMan.TotalAlts = sizeOfTable(AltMan.Alts);
 end
 
