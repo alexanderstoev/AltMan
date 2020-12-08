@@ -10,40 +10,31 @@ AltMan.Texts.alts = {}
 -- Displays the main frame of the addon
 ----------------------------------------------------------------------------
 function AltMan:InitFrame()
-    self.frame:Hide(); -- we need to hide the frame since this method is called on load
 
-    self.frame:SetFrameStrata("MEDIUM");
-    
-    self.frame:SetWidth(self:GetFrameWidth()); -- Set these to whatever height/width is needed 
-    self.frame:SetHeight(AltMan.constants.presentation.frame.height); -- for your Texture
-    
-    self.frame:EnableMouse(true)
-    self.frame:SetMovable(true)
-    
-    self.frame.background = self.frame:CreateTexture(nil, "BACKGROUND");
-	self.frame.background:SetAllPoints();
-	self.frame.background:SetDrawLayer("ARTWORK", 1);
-	self.frame.background:SetColorTexture(0, 0, 0, AltMan.constants.presentation.frame.alpha);
-    
-    self.frame:SetPoint("CENTER",0,0);
-    
-    self:DrawHeader();
-end
+    AltMan.frame:Hide(); -- we need to hide the frame since this method is called on load
 
-
-----------------------------------------------------------------------------
--- Shows the main frame of the addon
-----------------------------------------------------------------------------
-function AltMan:ShowFrame()
-    self.frame:Show();
-end
-
-
-----------------------------------------------------------------------------
--- Hides the main frame of the addon
-----------------------------------------------------------------------------
-function AltMan:HideFrame()
-    self.frame:Hide();
+    AltMan.frame:SetFrameStrata("MEDIUM");
+    
+    AltMan.frame:SetWidth(AltMan:GetFrameWidth()); -- Set these to whatever height/width is needed 
+    
+    AltMan.frame:EnableMouse(true)
+    AltMan.frame:SetMovable(true)
+    
+    
+    AltMan.frame:SetPoint("CENTER",0,0);
+    
+    AltMan:DrawHeader();
+    
+    AltMan:IncreaseMainFrameHeight(AltMan.constants.presentation.frame.paddingVertical);
+    AltMan:DrawMainInfo();
+    
+    AltMan:IncreaseMainFrameHeight(AltMan.constants.presentation.frame.paddingVertical);
+    AltMan:DrawAltsInfo();
+    
+    AltMan:IncreaseMainFrameHeight(AltMan.constants.presentation.frame.paddingVertical);
+    
+    AltMan:SetBackground(AltMan.frame)
+    print("done", AltMan.frame:GetHeight())
 end
 
 
@@ -51,36 +42,107 @@ end
 -- Draws the header of the main frame
 ----------------------------------------------------------------------------
 function AltMan:DrawHeader()
-    self.frame.header = CreateFrame("frame", "", self.frame);
-	self.frame.header:SetFrameStrata("MEDIUM");
-	self.frame.header:SetPoint("TOPLEFT", 0, 0);
+    AltMan.frame.header = CreateFrame("frame", "", AltMan.frame);
+	AltMan.frame.header:SetFrameStrata("MEDIUM");
+	AltMan.frame.header:SetPoint("TOPLEFT", 0, 0);
     
-    self.frame.header:SetWidth(self:GetFrameWidth());
-    self.frame.header:SetHeight(AltMan.constants.presentation.header.height);
+    local newFrameHeight = AltMan.constants.presentation.header.height
+    AltMan.frame.header:SetHeight(newFrameHeight);
+    AltMan.frame.header:SetWidth(AltMan:GetFrameWidth());
+
+    -- update the main frame height
+    AltMan:IncreaseMainFrameHeight(newFrameHeight);
+
+    AltMan:SetBackground(AltMan.frame.header)
     
-    self.frame.header.background = self.frame.header:CreateTexture(nil, "BACKGROUND");
-	self.frame.header.background:SetAllPoints();
-	self.frame.header.background:SetDrawLayer("ARTWORK", 1);
-	self.frame.header.background:SetColorTexture(0, 0, 0, AltMan.constants.presentation.frame.alpha);
+    AltMan.frame.header.title = AltMan.frame.header:CreateFontString(nil, nil, "GameFontNormalLarge");
+    AltMan.frame.header.title:SetPoint("TOPLEFT", 7, -7);
+    AltMan.frame.header.title:SetText("AltMan")
     
-    self.frame.header.title = self.frame.header:CreateFontString(nil, nil, "GameFontNormalLarge");
-    self.frame.header.title:SetPoint("TOPLEFT", 7, -7);
-    self.frame.header.title:SetText("AltMan")
-    
-    self:DrawCloseButton();
+    AltMan:DrawCloseButton();
 end
 
 
 ----------------------------------------------------------------------------
--- Draws the close button
+-- Draws the main info section
 ----------------------------------------------------------------------------
-function AltMan:DrawCloseButton()
-    self.frame.header.closeButton = CreateFrame("Button", "CloseButton", self.frame.header, "UIPanelCloseButton");
-	self.frame.header.closeButton:ClearAllPoints();
-	self.frame.header.closeButton:SetFrameStrata("HIGH");
-	self.frame.header.closeButton:SetPoint("TOPRIGHT", 0, 0);
-	self.frame.header.closeButton:SetScript("OnClick", function() self:Hide(); end);
+function AltMan:DrawMainInfo()
+    AltMan.frame.maininfo = CreateFrame("frame", "", AltMan.frame);
+	AltMan.frame.maininfo:SetFrameStrata("MEDIUM");
+    AltMan.frame.maininfo:SetPoint(
+        "TOPLEFT", 
+        AltMan.constants.presentation.frame.paddingHorizontal, 
+        -AltMan.frame:GetHeight()
+    );
+
+    AltMan.frame.maininfo:SetWidth(AltMan:GetFrameWidth() - AltMan.constants.presentation.frame.paddingHorizontal*2);
     
+    AltMan:addLine("weeklyreset", 0)
+    AltMan:addLine("dailyreset", 1)
+
+    local newFrameHeight = AltMan.constants.presentation.lineheight * 2 -- the two lines from above and 1 extra for padding
+    AltMan.frame.maininfo:SetHeight(newFrameHeight);
+
+    AltMan:SetBackground(AltMan.frame.maininfo, 1, 0.5, 0)
+
+    -- update the main frame height
+    AltMan:IncreaseMainFrameHeight(newFrameHeight);
+    
+end
+
+
+
+----------------------------------------------------------------------------
+-- Draws the alts info section
+----------------------------------------------------------------------------
+function AltMan:DrawAltsInfo()
+    AltMan.frame.altsinfo = CreateFrame("frame", "", AltMan.frame);
+	AltMan.frame.altsinfo:SetFrameStrata("MEDIUM");
+    AltMan.frame.altsinfo:SetPoint(
+        "TOPLEFT", 
+        AltMan.constants.presentation.frame.paddingHorizontal, 
+        -AltMan.frame:GetHeight()
+    );
+    AltMan.frame.altsinfo:SetWidth(AltMan:GetFrameWidth() - AltMan.constants.presentation.frame.paddingHorizontal*2);
+        
+    AltMan:DrawDailyActivities();
+    AltMan:IncreaseFrameHeight(AltMan.frame.altsinfo, AltMan.constants.presentation.frame.paddingVertical);
+    AltMan:DrawWeeklyActivities();
+
+    -- update the main frame height
+    AltMan:IncreaseMainFrameHeight(AltMan.frame.altsinfo:GetHeight());
+    
+    AltMan:SetBackground(AltMan.frame.altsinfo, 0.5, 0.5, 0)
+end
+
+
+function AltMan:DrawDailyActivities() 
+    AltMan.frame.altsinfo.daily = CreateFrame("frame", "", AltMan.frame.altsinfo);
+	AltMan.frame.altsinfo.daily:SetFrameStrata("MEDIUM");
+    AltMan.frame.altsinfo.daily:SetPoint("TOPLEFT", 0, AltMan.frame.altsinfo:GetHeight());
+    AltMan.frame.altsinfo.daily:SetWidth(AltMan:GetFrameWidth() - AltMan.constants.presentation.frame.paddingHorizontal*2);
+
+    local newFrameHeight = 0
+    AltMan:CreateNewString("daiilylabel", AltMan.frame.altsinfo.daily, 0, 0, true);
+    AltMan.frame.altsinfo.daily["daiilylabel"]:SetText("Daily activities");
+    newFrameHeight = newFrameHeight + AltMan.constants.presentation.lineheight;
+
+    AltMan.frame.altsinfo.daily:SetHeight(newFrameHeight);
+    AltMan:IncreaseFrameHeight(AltMan.frame.altsinfo, newFrameHeight);
+    AltMan:SetBackground(AltMan.frame.altsinfo.daily, 0, 0.2, 0.2)
+
+end
+
+function AltMan:DrawWeeklyActivities() 
+    AltMan.frame.altsinfo.weekly = CreateFrame("frame", "", AltMan.frame.altsinfo);
+	AltMan.frame.altsinfo.weekly:SetFrameStrata("MEDIUM");
+    AltMan.frame.altsinfo.weekly:SetPoint("TOPLEFT", 0, -AltMan.frame.altsinfo:GetHeight());
+    AltMan.frame.altsinfo.weekly:SetWidth(AltMan:GetFrameWidth() - AltMan.constants.presentation.frame.paddingHorizontal*2);
+    AltMan:SetBackground(AltMan.frame.altsinfo.weekly, 0.2, 0.2, 0)
+    
+    local newFrameHeight = 70;
+    AltMan.frame.altsinfo.weekly:SetHeight(newFrameHeight);
+    AltMan:IncreaseFrameHeight(AltMan.frame.altsinfo, newFrameHeight);
 end
 
 
@@ -95,129 +157,44 @@ end
 
 
 ----------------------------------------------------------------------------
--- Renders frames for each alt 
+-- Shows the main frame of the addon
 ----------------------------------------------------------------------------
-function AltMan:DrawBackgroundFrames()
-  
-    local numberOfAlts = 0;
-    for currentAltKey, currentAlt in pairs(AltMan.Alts) do
-
-        numberOfAlts = numberOfAlts + 1;
-
-        self.Frames.alts[currentAltKey] = CreateFrame("frame", "", self.frame);
-        self.Frames.alts[currentAltKey]:SetWidth(AltMan.constants.presentation.table.cellwidth);
-        self.Frames.alts[currentAltKey]:SetHeight(AltMan.constants.presentation.frame.height);
-        self.Frames.alts[currentAltKey]:SetFrameStrata("MEDIUM");
-        self.Frames.alts[currentAltKey]:SetPoint("TOPLEFT", AltMan.constants.presentation.table.cellwidth * (numberOfAlts), 0);
-
-        if (math.fmod(numberOfAlts, 2) == 1) then
-            self.Frames.alts[currentAltKey].background = self.Frames.alts[currentAltKey]:CreateTexture(nil, "BACKGROUND");
-            self.Frames.alts[currentAltKey].background:SetAllPoints();
-            self.Frames.alts[currentAltKey].background:SetDrawLayer("ARTWORK", 1);
-            self.Frames.alts[currentAltKey].background:SetColorTexture(0, 0, 0, 0.7);   
-        end
-        
-    end
+function AltMan:ShowFrame()
+    AltMan.frame:Show();
 end
 
 
 ----------------------------------------------------------------------------
--- Prepares and prints all data 
+-- Hides the main frame of the addon
 ----------------------------------------------------------------------------
-function AltMan:PrintData()
-    
-    -- print labels column
-    self:RenderColumn(AltMan.translations["en"]["labels"], self.frame, false, "labels");
-    
-    -- fillin the labels. They won't change
-    for _, dataKey in pairs(AltMan.altData) do
-        AltMan.Texts.alts["labels"][dataKey]:SetText(AltMan.translations["en"]["labels"][dataKey]);
-    end
-    for _, dataKey in pairs(AltMan.altActivities.daily) do
-        AltMan.Texts.alts["labels"][dataKey]:SetText(AltMan.translations["en"]["labels"][dataKey]);
-    end
-    for _, dataKey in pairs(AltMan.altActivities.weekly) do
-        AltMan.Texts.alts["labels"][dataKey]:SetText(AltMan.translations["en"]["labels"][dataKey]);
-    end
+function AltMan:HideFrame()
+    AltMan.frame:Hide();
+end
 
-    -- print the alts columns
-    for currentAltKey, currentAlt in pairs(AltMan.Alts) do
-        -- print("currentAltKey", currentAltKey)
-        self:RenderColumn(currentAlt, self.Frames.alts[currentAltKey], true, currentAltKey);
-    end
 
+
+----------------------------------------------------------------------------
+-- Draws the close button
+----------------------------------------------------------------------------
+function AltMan:DrawCloseButton()
+    AltMan.frame.header.closeButton = CreateFrame("Button", "CloseButton", AltMan.frame.header, "UIPanelCloseButton");
+	AltMan.frame.header.closeButton:ClearAllPoints();
+	AltMan.frame.header.closeButton:SetFrameStrata("HIGH");
+	AltMan.frame.header.closeButton:SetPoint("TOPRIGHT", 0, 0);
+    AltMan.frame.header.closeButton:SetScript("OnClick", function() AltMan:Hide(); end);
 end
 
 
 ----------------------------------------------------------------------------
--- Prints a colum
--- A labels colum or an alt colummn
+-- calculates and prints a line in the main info frame
 ----------------------------------------------------------------------------
-function AltMan:RenderColumn(dataObj, parent, isAltColumn, currentAltKey)
-    local row = 0;
-    row = self:RenderColumnSection(AltMan.altData, row, dataObj, parent, isAltColumn, currentAltKey);
-    row = row + 1;
-    row = self:RenderColumnSection(AltMan.altActivities.daily, row, dataObj, parent, isAltColumn, currentAltKey);
-    row = row + 1;
-    row = self:RenderColumnSection(AltMan.altActivities.weekly, row, dataObj, parent, isAltColumn, currentAltKey);
-end
+function AltMan:addLine(source, index)
 
+    -- create the string frame
+    AltMan:CreateNewString(source, AltMan.frame.maininfo, 0, -index*AltMan.constants.presentation.lineheight);
 
-----------------------------------------------------------------------------
--- Creates texts for a column section
--- sections: core data, daily and weekly activities
-----------------------------------------------------------------------------
-function AltMan:RenderColumnSection(section, row, dataObj, parent, isAltColumn, currentAltKey)
+    -- calculate the sring value
+    local dataString = AltMan.DataSources[source]()
     
-    local currentRow = row;
-    local rowHeight = AltMan.constants.presentation.table.cellheight;
-    
-    for _, altDataKey in pairs(section) do
-
-        if (AltMan.Texts.alts[currentAltKey] == nil) then
-            AltMan.Texts.alts[currentAltKey] = {}
-        end
-        
-        AltMan.Texts.alts[currentAltKey][altDataKey] = parent:CreateFontString(nil, nil, "GameFontNormalSmall");
-        AltMan.Texts.alts[currentAltKey][altDataKey]:SetPoint("TOPLEFT", AltMan.constants.presentation.frame.paddingHorizontal + 0, - AltMan.constants.presentation.frame.paddingVertical - currentRow * rowHeight);
-        if (currentRow == 0 and isAltColumn) then
-            local altClass = dataObj['class'];
-            altClass = string.gsub(altClass, "%s+", ""); -- remove spaces e.g. Demon hunter -> Demonhunter
-            altClass = string.upper(altClass); -- transform to uppercase e.g. Demonhunter -> DEMONHUNTER
-
-            AltMan.Texts.alts[currentAltKey][altDataKey]:SetTextColor(
-                RAID_CLASS_COLORS[altClass].r,
-                RAID_CLASS_COLORS[altClass].g,
-                RAID_CLASS_COLORS[altClass].b,
-                RAID_CLASS_COLORS[altClass].a   
-            );
-            AltMan.Texts.alts[currentAltKey][altDataKey]:SetFont("Fonts\\FRIZQT__.TTF", 15);
-        end
-
-        AltMan.Texts.alts[currentAltKey][altDataKey]:SetJustifyH("LEFT");
-        currentRow = currentRow + 1;
-    end
-
-    return currentRow;
-end
-
-
-----------------------------------------------------------------------------
--- Updates texts for a column section
--- sections: core data, daily and weekly activities
-----------------------------------------------------------------------------
-function AltMan:PrintAltsData()
-    
-    for currentAltKey, currentAlt in pairs(AltMan.Alts) do
-        for _, dataKey in pairs(AltMan.altData) do
-            AltMan.Texts.alts[currentAltKey][dataKey]:SetText(currentAlt[dataKey]);
-        end
-        for _, dataKey in pairs(AltMan.altActivities.daily) do
-            AltMan.Texts.alts[currentAltKey][dataKey]:SetText(currentAlt[dataKey]);
-        end
-        for _, dataKey in pairs(AltMan.altActivities.weekly) do
-            AltMan.Texts.alts[currentAltKey][dataKey]:SetText(currentAlt[dataKey]);
-        end
-    end
-
+    AltMan.frame.maininfo[source]:SetText(dataString);
 end
