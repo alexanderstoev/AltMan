@@ -5,6 +5,8 @@
 ## Version: 0.0.1
 ## SavedVariables: AltManDB
 
+AltManTranslations.lua
+
 AltManHelpers.lua
 
 DataSources/global/weeklyreset.lua
@@ -18,8 +20,10 @@ DataSources/dungeonquests.lua
 DataSources/coreCharacter.lua
 DataSources/mythicplus.lua
 
-AltManTranslations.lua
 AltManData.lua
+
 UI/AltManConst.lua
+UI/AltManUIHelpers.lua
 UI/AltManUI.lua
+
 AltMan.lua
