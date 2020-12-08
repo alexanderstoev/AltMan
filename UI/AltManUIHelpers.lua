@@ -28,7 +28,7 @@ end
 ----------------------------------------------------------------------------
 -- sets the background to a frame
 ----------------------------------------------------------------------------
-function AltMan:SetBackground(parent)
+function AltMan:SetBackground(parent, r, g, b)
     parent["background"] = parent:CreateTexture(nil, "BACKGROUND");
     parent["background"]:SetAllPoints();
     parent["background"]:SetDrawLayer("ARTWORK", 1);
@@ -45,5 +45,18 @@ function AltMan:SetBackground(parent)
     parent["background"]:SetColorTexture(r, g, b, AltMan.constants.presentation.frame.alpha);
 end
  
+
+----------------------------------------------------------------------------
+-- Shortcut method to increase the main frame height
+----------------------------------------------------------------------------
+function AltMan:IncreaseMainFrameHeight(increase)
+    AltMan:IncreaseFrameHeight(AltMan.frame, increase);
 end
- 
+
+
+----------------------------------------------------------------------------
+-- Increases the height of a providede frame
+----------------------------------------------------------------------------
+function AltMan:IncreaseFrameHeight(frame, increase)
+    frame:SetHeight(frame:GetHeight() + increase);
+end
