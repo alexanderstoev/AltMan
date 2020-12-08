@@ -27,9 +27,7 @@ function AltMan:InitFrame()
     
     self.frame:SetPoint("CENTER",0,0);
     
-    self:DrawCloseButton();
-    self:DrawBackgroundFrames();
-    self:PrintData()
+    self:DrawHeader();
 end
 
 
@@ -50,14 +48,39 @@ end
 
 
 ----------------------------------------------------------------------------
+-- Draws the header of the main frame
+----------------------------------------------------------------------------
+function AltMan:DrawHeader()
+    self.frame.header = CreateFrame("frame", "", self.frame);
+	self.frame.header:SetFrameStrata("MEDIUM");
+	self.frame.header:SetPoint("TOPLEFT", 0, 0);
+    
+    self.frame.header:SetWidth(self:GetFrameWidth());
+    self.frame.header:SetHeight(AltMan.constants.presentation.header.height);
+    
+    self.frame.header.background = self.frame.header:CreateTexture(nil, "BACKGROUND");
+	self.frame.header.background:SetAllPoints();
+	self.frame.header.background:SetDrawLayer("ARTWORK", 1);
+	self.frame.header.background:SetColorTexture(0, 0, 0, AltMan.constants.presentation.frame.alpha);
+    
+    self.frame.header.title = self.frame.header:CreateFontString(nil, nil, "GameFontNormalLarge");
+    self.frame.header.title:SetPoint("TOPLEFT", 7, -7);
+    self.frame.header.title:SetText("AltMan")
+    
+    self:DrawCloseButton();
+end
+
+
+----------------------------------------------------------------------------
 -- Draws the close button
 ----------------------------------------------------------------------------
 function AltMan:DrawCloseButton()
-    self.frame.closeButton = CreateFrame("Button", "CloseButton", self.frame, "UIPanelCloseButton");
-	self.frame.closeButton:ClearAllPoints();
-	self.frame.closeButton:SetFrameStrata("HIGH");
-	self.frame.closeButton:SetPoint("TOPRIGHT", 0, 0);
-	self.frame.closeButton:SetScript("OnClick", function() self:Hide(); end);
+    self.frame.header.closeButton = CreateFrame("Button", "CloseButton", self.frame.header, "UIPanelCloseButton");
+	self.frame.header.closeButton:ClearAllPoints();
+	self.frame.header.closeButton:SetFrameStrata("HIGH");
+	self.frame.header.closeButton:SetPoint("TOPRIGHT", 0, 0);
+	self.frame.header.closeButton:SetScript("OnClick", function() self:Hide(); end);
+    
 end
 
 
