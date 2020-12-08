@@ -3,18 +3,24 @@ local _, AltMan = ...
 ----------------------------------------------------------------------------
 -- Creates a new string
 ----------------------------------------------------------------------------
-function AltMan:CreateNewString(name, parent, horizontal, vertical)
+function AltMan:CreateNewString(name, parent, horizontal, vertical, isHeading)
     parent[name] = parent:CreateFontString(nil, nil, "GameFontNormalSmall");
     parent[name]:SetPoint("TOPLEFT", horizontal, vertical);
-    AltMan:SetStringFormatting(parent[name]);
+    AltMan:SetStringFormatting(parent[name], isHeading);
 end
 
 
 ----------------------------------------------------------------------------
 -- sets common formating to strings
 ----------------------------------------------------------------------------
-function AltMan:SetStringFormatting(stringToFormat)
-    stringToFormat:SetFont("Fonts\\FRIZQT__.TTF", AltMan.constants.presentation.fontSize);
+function AltMan:SetStringFormatting(stringToFormat, isHeading)
+    
+    local fontSize = AltMan.constants.presentation.fontSize;
+    if (isHeading) then
+        fontSize = fontSize + 5
+    end
+
+    stringToFormat:SetFont("Fonts\\FRIZQT__.TTF", fontSize);
     stringToFormat:SetTextColor(0.8, 0.8, 0.8, 1);
 end
 
