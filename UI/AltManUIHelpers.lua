@@ -18,12 +18,15 @@ end
 function AltMan.UI:SetStringFormatting(stringToFormat, isHeading)
     
     local fontSize = AltMan.constants.presentation.fontSize;
+    stringToFormat:SetTextColor(0.8, 0.8, 0.8, 1);
+    stringToFormat:SetJustifyH("LEFT");
+    
     if (isHeading) then
         fontSize = fontSize + 5
+        stringToFormat:SetTextColor(0.8, 0.8, 0.1, 1);
     end
 
     stringToFormat:SetFont("Fonts\\FRIZQT__.TTF", fontSize);
-    stringToFormat:SetTextColor(0.8, 0.8, 0.8, 1);
 end
 
 

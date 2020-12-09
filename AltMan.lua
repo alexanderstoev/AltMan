@@ -7,16 +7,16 @@ local ADDON_NAME = "AltMan";
 local main_frame = CreateFrame("frame", "AltManFrame", UIParent);
 
 main_frame:RegisterForDrag("LeftButton");
-main_frame:SetMovable(); 
+main_frame:SetMovable();
 main_frame:SetScript("OnDragStart", main_frame.StartMoving)
 main_frame:SetScript("OnDragStop", main_frame.StopMovingOrSizing)
 
 main_frame:RegisterEvent("ADDON_LOADED");
 main_frame:RegisterEvent("PLAYER_LEAVING_WORLD");
-main_frame:SetScript("OnEvent", function(self, ...) 
+main_frame:SetScript("OnEvent", function(self, ...)
     local event, loaded = ...;
     if (loaded == ADDON_NAME) then
-        AltMan:EventsDispatcher(event) 
+        AltMan:EventsDispatcher(event)
     end
 end)
 AltMan.frame = main_frame;
@@ -34,20 +34,41 @@ end
 ----------------------------------------------------------------------------
 -- Displays the main frame of the addon
 ----------------------------------------------------------------------------
+function AltMan:OnLoad()
+
+    AltMan.DB:Init();
+
+    -- refresh the current character data
+    AltMan.Data:PrepareData();
+
+    AltMan.UI:InitMainFrame();
+    AltMan.UI:DrawInfoSection("server-data", AltMan.Data:GetData("server-data"));
+    AltMan.UI:DrawInfoSection("alt-data-core", AltMan.Data:GetData("alt-data-core"));
+    AltMan.UI:DrawInfoSection("alt-data-daily", AltMan.Data:GetData("alt-data-daily"));
+    AltMan.UI:DrawInfoSection("alt-data-weekly", AltMan.Data:GetData("alt-data-weekly"));
+
+    AltMan.UI:IncreaseMainFrameHeight(AltMan.constants.presentation.frame.paddingVertical);
+end
+
+
+----------------------------------------------------------------------------
+-- Displays the main frame of the addon
+----------------------------------------------------------------------------
 function AltMan:Show()
     if (shown == true) then
         return
     end
-    
+
     -- refresh the current character data
     AltMan:RefreshCharacterData();
 
     AltMan.UI:ShowFrame();
     -- self:PrintAltsData()
-    
+
     shown = true;
 
 end
+
 
 ----------------------------------------------------------------------------
 -- Hides the main frame of the addon
@@ -59,39 +80,13 @@ end
 
 
 ----------------------------------------------------------------------------
--- Displays the main frame of the addon
-----------------------------------------------------------------------------
-function AltMan:OnLoad()
-    
-
-    if (AltManDB == nil) then
-        AltManDB = {}
-    end
-    
-    -- always reset the current addon version
-    -- In the future this will be used for data migtation to newer versions
-    AltManDB["version"] = "0.0.1";
-    
-    -- check if we have any data loaded
-    if (AltManDB.alts == nil) then
-        AltManDB.alts = {}
-    end
-    -- refresh the current character data
-    AltMan:RefreshCharacterData();
-    
-    AltMan.UI:InitFrame();
-    
-end
-
-
-----------------------------------------------------------------------------
 -- Recalculates the data for the current character
 -- and store is in the AltManDB variable which is persisted
 ----------------------------------------------------------------------------
-function AltMan:RefreshCharacterData() 
+function AltMan:RefreshCharacterData()
     -- refresh the current character data
     AltManDB.alts[UnitGUID('player')] = self:GetCurrentCharacterData();
-    AltMan:LoadAlts(AltManDB.alts);
+    -- AltMan:LoadAlts(AltManDB.alts);
 end
 
 ---------------------------------------------------------------------------
@@ -100,9 +95,9 @@ end
 SLASH_ALTMAN1 = "/zam";
 SLASH_ALTMAN2 = "/alts";
 
-SlashCmdList["ALTMAN"] = function (args) 
+SlashCmdList["ALTMAN"] = function (args)
     if(string.len(args) > 0) then
-        print("Alt Man help: No help so far. You've added " .. args)
+        print("AltMan help: No help so far. You've added " .. args)
     else
         AltMan:Show();
     end
