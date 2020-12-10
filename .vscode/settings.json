@@ -12,6 +12,7 @@
         "UnitClass",
         "UnitLevel",
         "RAID_CLASS_COLORS",
-        "UIParent"
+        "UIParent",
+        "ReloadUI"
     ]
 }
