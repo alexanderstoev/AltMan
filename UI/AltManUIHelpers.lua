@@ -17,7 +17,7 @@ end
 function AltMan.UI:SetStringFormatting(stringToFormat, isHeading)
 
     local fontSize = AltMan.constants.presentation.fontSize;
-    stringToFormat:SetTextColor(0.8, 0.8, 0.8, 1);
+    stringToFormat:SetTextColor(0.9, 0.9, 0.9, 1);
     stringToFormat:SetJustifyH("LEFT");
 
     if (isHeading) then
