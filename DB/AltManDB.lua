@@ -19,6 +19,10 @@ function AltMan.DB:Init()
             AltMan.Alts[altKey] = alt;
         end
     end
+
+    if (sizeOfTable(AltMan.Alts) == 0) then
+       AltMan.Alts[AltMan.currentAltGUID] = {};
+    end
     AltMan.TotalAlts = sizeOfTable(AltMan.Alts);
 end
 

@@ -50,6 +50,7 @@ function AltMan:OnLoad()
     AltMan.UI:DrawInfoSection("alt-data-daily", AltMan.Data.dataSourcesTypes["alt-data"]["daily"]);
     AltMan.UI:DrawInfoSection("alt-data-weekly", AltMan.Data.dataSourcesTypes["alt-data"]["weekly"]);
     AltMan.UI:AddAltsBackground();
+
     -- fill in data
     AltMan.UI:DrawInfoSubSection("server-data", "data", AltMan.Data:GetData("server-data"));
 
@@ -67,7 +68,8 @@ end
 ----------------------------------------------------------------------------
 -- Displays the main frame of the addon
 ----------------------------------------------------------------------------
-function AltMan:Show()
+function AltMan:Show(showResetControls)
+
     if (shown == true) then
         return
     end
@@ -92,6 +94,15 @@ function AltMan:Show()
 
 end
 
+
+----------------------------------------------------------------------------
+-- Clears all data for alts
+----------------------------------------------------------------------------
+function AltMan:ClearData()
+    print("Clearing data")
+    AltManDB = {};
+end
+
 ----------------------------------------------------------------------------
 -- Hides the main frame of the addon
 ----------------------------------------------------------------------------
@@ -108,7 +119,12 @@ SLASH_ALTMAN2 = "/alts";
 
 SlashCmdList["ALTMAN"] = function(args)
     if (string.len(args) > 0) then
-        print("AltMan help: No help so far. You've added " .. args)
+        if (args =="reset") then
+            AltMan.UI:CreateRemoveButton();
+            AltMan:Show();
+        else
+            print("AltMan help: No help so far. Arg = " .. args)
+        end
     else
         AltMan:Show();
     end

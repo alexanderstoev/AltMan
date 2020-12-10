@@ -69,6 +69,26 @@ function AltMan.UI:DrawCloseButton()
     end);
 end
 
+function AltMan.UI:CreateRemoveButton()
+    AltMan.frame.header.title = AltMan.frame.header:CreateFontString(nil, nil, "GameFontNormalLarge");
+    AltMan.frame.header.title:SetPoint("TOPRIGHT", -95, -7);
+    AltMan.frame.header.title:SetText("Clear all alts data")
+
+    AltMan.frame.header.clearDataButton = CreateFrame("Button", "ClearButton", AltMan.frame.header,
+                                              "UIPanelSquareButton");
+    AltMan.frame.header.clearDataButton:ClearAllPoints();
+    AltMan.frame.header.clearDataButton:SetFrameStrata("HIGH");
+    AltMan.frame.header.clearDataButton:SetPoint("TOPRIGHT", -70, -2);
+    AltMan.frame.header.clearDataButton:SetScript("OnClick", function()
+        AltMan:ClearData();
+    end);
+
+    AltMan.frame.header.clearDataButton.tex = AltMan.frame.header.clearDataButton:CreateTexture(nil, "BACKGROUND")
+    AltMan.frame.header.clearDataButton.tex:SetTexture("Interface\\Buttons\\UI-GroupLoot-Pass-Up")
+    AltMan.frame.header.clearDataButton.tex:SetAllPoints()
+    AltMan.frame.header.clearDataButton.tex:Show();
+end
+
 ----------------------------------------------------------------------------
 -- Shows the main frame of the addon
 ----------------------------------------------------------------------------
