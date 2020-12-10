@@ -31,7 +31,7 @@ UI/AltManConst.lua
 UI/AltManUIHelpers.lua 
 UI/AltManUIInfoSection.lua
 UI/AltManUIMainFrame.lua
-UI/AltManUI.lua
+# UI/AltManUI.lua
 
 DB/AltManDB.lua
 AltMan.lua
