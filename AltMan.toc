@@ -5,18 +5,33 @@
 ## Version: 0.0.1
 ## SavedVariables: AltManDB
 
+AltManTranslations.lua
+
 AltManHelpers.lua
 
-DataSources/covenantcalling.lua
-DataSources/soulash.lua
-DataSources/rescuesouls.lua
-DataSources/anima.lua
-DataSources/dungeonquests.lua
-DataSources/coreCharacter.lua
-DataSources/mythicplus.lua
+DataSources/server/weeklyreset.lua
+DataSources/server/dailyreset.lua
 
-AltManTranslations.lua
-AltManConst.lua
+DataSources/daily/mawdailies.lua
+DataSources/daily/covenantcalling.lua
+DataSources/daily/worldquests.lua
+
+DataSources/weekly/soulash.lua
+DataSources/weekly/rescuesouls.lua
+DataSources/weekly/animaquest.lua
+DataSources/weekly/dungeonquests.lua
+DataSources/weekly/mythicplus.lua
+DataSources/weekly/worldboss.lua
+
+DataSources/coreCharacter.lua
+
 AltManData.lua
-AltManUI.lua
+
+UI/AltManConst.lua
+UI/AltManUIHelpers.lua 
+UI/AltManUIInfoSection.lua
+UI/AltManUIMainFrame.lua
+# UI/AltManUI.lua
+
+DB/AltManDB.lua
 AltMan.lua
