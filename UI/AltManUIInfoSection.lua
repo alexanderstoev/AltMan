@@ -91,7 +91,6 @@ function AltMan.UI:DrawInfoSubSection(type, key, data, index)
     AltMan.frame.infoSections[type][key]:SetPoint("TOPLEFT", positionX, -AltMan.constants.presentation.lineheight); -- we always have a header section even if no string is printed
     -- AltMan.UI:SetBackground(AltMan.frame.infoSections[type][key], (0.2*index), 0.5, 0)
 
-
     local order = dataOrder[type]
 
     local subType = string.gsub(type, "alt%-data%-", "");
@@ -104,7 +103,14 @@ function AltMan.UI:DrawInfoSubSection(type, key, data, index)
         AltMan.UI:CreateNewString(dataKey, AltMan.frame.infoSections[type][key], 0,
             -dataIndex * AltMan.constants.presentation.lineheight);
 
-        AltMan.frame.infoSections[type][key][dataKey]:SetText(data[dataKey]);
+        if (dataKey == "class") then
+            local altClass = data[dataKey];
+            altClass = string.gsub(altClass, "%s+", ""); -- remove spaces e.g. Demon hunter -> Demonhunter
+            altClass = string.upper(altClass); -- transform to uppercase e.g. Demonhunter -> DEMONHUNTER
+
+            AltMan.frame.infoSections[type][key][dataKey]:SetTextColor(RAID_CLASS_COLORS[altClass].r,
+                RAID_CLASS_COLORS[altClass].g, RAID_CLASS_COLORS[altClass].b, RAID_CLASS_COLORS[altClass].a);
+        end
 
         dataIndex = dataIndex + 1;
     end
