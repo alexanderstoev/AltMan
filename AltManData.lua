@@ -15,6 +15,7 @@ local DataSourcesTypes = {
 ----------------------------------------------------------------------------
 function AltMan.Data:PrepareData()
 
+    AltMan.currentAltGUID = UnitGUID('player');
     AltMan.TotalAlts = sizeOfTable(AltMan.Alts);
 
     AltMan.Data:GetData("server-data", true);
