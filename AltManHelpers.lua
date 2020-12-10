@@ -51,11 +51,17 @@ end
 
 
 function compareAlts(t,a,b)
+
+    -- push the current alt to the front
 	if (a == AltMan.currentAltGUID) then
+        return true;
+    elseif (b == AltMan.currentAltGUID) then
+        return  false;
+    end
+
+    -- sort alphabeticaly
+	if (t[a].name < t[b].name) then
 		return true;
 	end
-	if (t[a].name < t[b].name) then
-		return true
-	end
-	return false
+	return false;
 end
