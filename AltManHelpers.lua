@@ -39,6 +39,7 @@ function Spairs(t, order)
         table.sort(keys, function(a, b)
             return order(t, a, b)
         end)
+
     else
         table.sort(keys)
     end
