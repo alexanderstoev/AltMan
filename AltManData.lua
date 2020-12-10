@@ -1,43 +1,120 @@
 local _, AltMan = ...;
 
-AltMan.Alts = {};
-AltMan.TotalAlts = 0;
+AltMan.Alts = AltMan.Alts or {};
+AltMan.TotalAlts = AltMan.TotalAlts or 0;
 
-AltMan.altData = {
-    "name", "class", "level" -- general alt data
+AltMan.Data = AltMan.Data or {};
+AltMan.Data.data = {};
+
+AltMan.Data.dataSourcesTypes = {
+    ["server-data"] = {
+        [1] = "dailyreset",
+        [2] = "weeklyreset"
+    },
+    ["alt-data"] = {
+        ["core"] = {
+            [1] = "name",
+            [2] = "class",
+            [3] = "level"
+        },
+        ["daily"] = {
+            [1] = "covenantcalling",
+            [2] = "mawdailies",
+            [3] = "worldquests"
+        },
+        ["weekly"] = {
+            [1] = "mythicplus",
+            [2] = "dungeonquests",
+            [3] = "rescuesouls",
+            [4] = "animaquest",
+            [5] = "soulash",
+            [6] = "worldboss"
+        }
+    }
 }
-AltMan.altActivities = {}
-AltMan.altActivities.daily = {
-    "mawdailies", "worldquests", "covenantcalling" -- daily activities
-}
-AltMan.altActivities.weekly = {
-    "mythicplus", "dungeonquests", "rescuesouls", "animaquest", "soulash" -- weekly activities
-}
+----------------------------------------------------------------------------
+--
+----------------------------------------------------------------------------
+function AltMan.Data:PrepareData()
 
-function AltMan:GetCurrentCharacterData()
-    local character = {}
-    
-    character = AltMan:GetDataGroupValues(character, AltMan.altData);
-    character = AltMan:GetDataGroupValues(character, AltMan.altActivities.daily);
-    character = AltMan:GetDataGroupValues(character, AltMan.altActivities.weekly);
-    
-    return character
-end;
+    AltMan.TotalAlts = sizeOfTable(AltMan.Alts);
 
+    AltMan.Data.data = AltMan.Data.data or {}
 
-function AltMan:GetDataGroupValues(character, dataGroup)
-    for _, dataGroupEntry in pairs(dataGroup) do
-        -- first check if we have a data source for the entry
-        if (not (AltMan.DataSources[dataGroupEntry] == nil)) then
-            character[dataGroupEntry] = AltMan.DataSources[dataGroupEntry]()
+    AltMan.Data:GetData("server-data", true);
+
+    for altKey, alt in Spairs(AltMan.Alts, CompareAlts) do
+        local refreshData = altKey == AltMan.currentAltGUID;
+        AltMan.Data:GetAltData("alt-data-core", refreshData, altKey, alt);
+        AltMan.Data:GetAltData("alt-data-daily", refreshData, altKey, alt);
+        AltMan.Data:GetAltData("alt-data-weekly", refreshData, altKey, alt);
+    end
+
+    AltMan.DB:Store()
+
+end
+
+----------------------------------------------------------------------------
+--
+----------------------------------------------------------------------------
+function AltMan.Data:RefreshCurrentAltData()
+    AltMan.Data:GetData("server-data", true);
+    AltMan.Data:GetAltData("alt-data-core", true, AltMan.currentAltGUID);
+    AltMan.Data:GetAltData("alt-data-daily", true, AltMan.currentAltGUID);
+    AltMan.Data:GetAltData("alt-data-weekly", true, AltMan.currentAltGUID);
+    AltMan.DB:Store()
+end
+
+----------------------------------------------------------------------------
+--
+----------------------------------------------------------------------------
+function AltMan.Data:GetData(type, refresh, altKey, alt)
+    local dataSources = AltMan.Data.dataSourcesTypes[type];
+
+    if (refresh or AltMan.Data.data[type] == nil) then
+        AltMan.Data.data[type] = {}
+        for _, source in Spairs(dataSources, CompareDataSources) do
+            local value = AltMan.DataSources[source]();
+            AltMan.Data.data[type][source] = value;
         end
     end
-    return character;
+    return AltMan.Data.data[type];
 end
 
+----------------------------------------------------------------------------
+--
+----------------------------------------------------------------------------
+function AltMan.Data:GetAltData(type, refresh, altKey, alt)
 
-function AltMan:LoadAlts(alts)
-    AltMan.Alts = alts;
-    AltMan.TotalAlts = sizeOfTable(alts);
+    -- strip "alt-data-" from the type in order to match it in the datasources
+    type = string.gsub(type, "alt%-data%-", "");
+    local dataSources = AltMan.Data.dataSourcesTypes["alt-data"][type];
+
+    -- init the ald data if needed
+    AltMan.Data.data["alt-data"] = AltMan.Data.data["alt-data"] or {};
+    AltMan.Data.data["alt-data"][altKey] = AltMan.Data.data["alt-data"][altKey] or {}
+
+    -- if we don't have data in the destination gather it
+    if (refresh or AltMan.Data.data["alt-data"][altKey][type] == nil) then
+
+        -- reset the alt
+        AltMan.Data.data["alt-data"][altKey][type] = {}
+
+        -- if this is the currently logged alt - then we need to use the data sources
+        if (altKey == AltMan.currentAltGUID) then
+            for _, source in Spairs(dataSources, CompareDataSources) do
+                local value = AltMan.DataSources[source]();
+                AltMan.Data.data["alt-data"][altKey][type][source] = value;
+            end
+
+            -- if this is another alt we need to rely on the saved data
+        else
+            for _, source in Spairs(dataSources, CompareDataSources) do
+                local value = alt[type][source] or "N/A";
+                AltMan.Data.data["alt-data"][altKey][type][source] = value;
+            end
+        end
+    end
+
+    return AltMan.Data.data["alt-data"][altKey][type]
 end
-
