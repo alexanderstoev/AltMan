@@ -12,6 +12,7 @@ main_frame:SetScript("OnDragStart", main_frame.StartMoving)
 main_frame:SetScript("OnDragStop", main_frame.StopMovingOrSizing)
 
 main_frame:RegisterEvent("ADDON_LOADED");
+main_frame:RegisterEvent("PLAYER_LOGOUT");
 main_frame:RegisterEvent("PLAYER_LEAVING_WORLD");
 main_frame:SetScript("OnEvent", function(self, ...)
     local event, loaded = ...;
@@ -27,6 +28,8 @@ AltMan.frame = main_frame;
 function AltMan:EventsDispatcher(event)
     if event == "ADDON_LOADED" then
         self:OnLoad();
+    elseif event == "PLAYER_LOGOUT" or event == "PLAYER_LEAVING_WORLD" then
+        AltMan.DB:Store();
     end
 end
 
@@ -94,13 +97,15 @@ function AltMan:Show(showResetControls)
 
 end
 
-
 ----------------------------------------------------------------------------
 -- Clears all data for alts
 ----------------------------------------------------------------------------
 function AltMan:ClearData()
-    print("Clearing data")
+
+    AltMan.Data.data["alt-data"] = {}
     AltManDB = {};
+    AltMan.Data:RefreshCurrentAltData()
+    ReloadUI();
 end
 
 ----------------------------------------------------------------------------
@@ -119,7 +124,7 @@ SLASH_ALTMAN2 = "/alts";
 
 SlashCmdList["ALTMAN"] = function(args)
     if (string.len(args) > 0) then
-        if (args =="reset") then
+        if (args == "reset") then
             AltMan.UI:CreateRemoveButton();
             AltMan:Show();
         else

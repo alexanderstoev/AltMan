@@ -15,20 +15,19 @@ function AltMan.DB:Init()
     AltManDB["version"] = "0.0.1";
 
     for altKey, alt in pairs(AltManDB.alts) do
-        if alt.level == 60 then
+        if alt.core.level == 60 then
             AltMan.Alts[altKey] = alt;
         end
     end
 
-    if (sizeOfTable(AltMan.Alts) == 0) then
-       AltMan.Alts[AltMan.currentAltGUID] = {};
-    end
+    AltMan.Alts[AltMan.currentAltGUID] = {};
+
     AltMan.TotalAlts = sizeOfTable(AltMan.Alts);
 end
 
 ----------------------------------------------------------------------------
 -- stores data in the DB
 ----------------------------------------------------------------------------
-function AltMan.DB:Store(var, val)
-    AltManDB[var] = val
+function AltMan.DB:Store()
+    AltManDB.alts = AltMan.Data.data["alt-data"];
 end

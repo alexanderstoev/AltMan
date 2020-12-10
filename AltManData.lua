@@ -44,10 +44,13 @@ function AltMan.Data:PrepareData()
     AltMan.Data:GetData("server-data", true);
 
     for altKey, alt in Spairs(AltMan.Alts, CompareAlts) do
-        AltMan.Data:GetAltData("alt-data-core", true, altKey, alt);
-        AltMan.Data:GetAltData("alt-data-daily", true, altKey, alt);
-        AltMan.Data:GetAltData("alt-data-weekly", true, altKey, alt);
+        local refreshData = altKey == AltMan.currentAltGUID;
+        AltMan.Data:GetAltData("alt-data-core", refreshData, altKey, alt);
+        AltMan.Data:GetAltData("alt-data-daily", refreshData, altKey, alt);
+        AltMan.Data:GetAltData("alt-data-weekly", refreshData, altKey, alt);
     end
+
+    AltMan.DB:Store()
 
 end
 
@@ -59,6 +62,7 @@ function AltMan.Data:RefreshCurrentAltData()
     AltMan.Data:GetAltData("alt-data-core", true, AltMan.currentAltGUID);
     AltMan.Data:GetAltData("alt-data-daily", true, AltMan.currentAltGUID);
     AltMan.Data:GetAltData("alt-data-weekly", true, AltMan.currentAltGUID);
+    AltMan.DB:Store()
 end
 
 ----------------------------------------------------------------------------
@@ -106,7 +110,7 @@ function AltMan.Data:GetAltData(type, refresh, altKey, alt)
             -- if this is another alt we need to rely on the saved data
         else
             for _, source in Spairs(dataSources, CompareDataSources) do
-                local value = alt[source] or "N/A";
+                local value = alt[type][source] or "N/A";
                 AltMan.Data.data["alt-data"][altKey][type][source] = value;
             end
         end
