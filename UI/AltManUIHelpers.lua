@@ -47,7 +47,7 @@ function AltMan.UI:SetBackground(parent, r, g, b)
         g=r
     end
 
-    parent["background"]:SetColorTexture(r, g, b, AltMan.constants.presentation.frame.alpha);
+    parent["background"]:SetColorTexture(r, g, b, AltMan.constants.presentation.frameAlpha);
 end
 
 

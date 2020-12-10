@@ -42,10 +42,23 @@ function AltMan:OnLoad()
     AltMan.Data:PrepareData();
 
     AltMan.UI:InitMainFrame();
-    AltMan.UI:DrawInfoSection("server-data", AltMan.Data:GetData("server-data"));
-    AltMan.UI:DrawInfoSection("alt-data-core", AltMan.Data:GetData("alt-data-core"));
-    AltMan.UI:DrawInfoSection("alt-data-daily", AltMan.Data:GetData("alt-data-daily"));
-    AltMan.UI:DrawInfoSection("alt-data-weekly", AltMan.Data:GetData("alt-data-weekly"));
+
+    -- create the basic layout and put labels
+    AltMan.UI:DrawInfoSection("server-data", AltMan.Data.dataSourcesTypes["server-data"]);
+    AltMan.UI:DrawInfoSection("alt-data-core", AltMan.Data.dataSourcesTypes["alt-data"]["core"]);
+    AltMan.UI:DrawInfoSection("alt-data-daily", AltMan.Data.dataSourcesTypes["alt-data"]["daily"]);
+    AltMan.UI:DrawInfoSection("alt-data-weekly", AltMan.Data.dataSourcesTypes["alt-data"]["weekly"]);
+
+    -- fill in data
+    AltMan.UI:PrintInfoSection("server-data", "data", AltMan.Data:GetData("server-data"));
+
+    local index = 0;
+    for altKey, alt in spairs(AltMan.Data.data["alt-data"], compareAlts) do
+         AltMan.UI:PrintInfoSection("alt-data-core", altKey, alt["core"], index);
+         AltMan.UI:PrintInfoSection("alt-data-daily", altKey, alt["daily"], index);
+         AltMan.UI:PrintInfoSection("alt-data-weekly", altKey, alt["weekly"], index);
+        index = index + 1;
+    end
 
     AltMan.UI:IncreaseMainFrameHeight(AltMan.constants.presentation.frame.paddingVertical);
 end
@@ -60,7 +73,7 @@ function AltMan:Show()
     end
 
     -- refresh the current character data
-    AltMan:RefreshCharacterData();
+    AltMan.Data:RefreshCurrentAltData()
 
     AltMan.UI:ShowFrame();
     -- self:PrintAltsData()
@@ -78,16 +91,6 @@ function AltMan:Hide()
     shown = false;
 end
 
-
-----------------------------------------------------------------------------
--- Recalculates the data for the current character
--- and store is in the AltManDB variable which is persisted
-----------------------------------------------------------------------------
-function AltMan:RefreshCharacterData()
-    -- refresh the current character data
-    AltManDB.alts[UnitGUID('player')] = self:GetCurrentCharacterData();
-    -- AltMan:LoadAlts(AltManDB.alts);
-end
 
 ---------------------------------------------------------------------------
 -- Displays the main frame of the addon

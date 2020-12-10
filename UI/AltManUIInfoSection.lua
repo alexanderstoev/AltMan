@@ -35,29 +35,54 @@ function AltMan.UI:DrawInfoSection(type, data)
     AltMan.frame.infoSections[type]["labels"]:SetPoint("TOPLEFT", 0, -AltMan.frame.infoSections[type]:GetHeight());
     AltMan.frame.infoSections[type]["labels"]:SetWidth(AltMan.constants.presentation.labelsFrameWidth);
 
-
+    -- adjust the frames heights
     local newFrameHeight = sizeOfTable(data) * AltMan.constants.presentation.lineheight;
     AltMan.frame.infoSections[type]["labels"]:SetHeight(newFrameHeight);
-    -- AltMan.UI:SetBackground(AltMan.frame.infoSections[type]["labels"], 1, 0.5, 0)
-    -- AltMan.UI:SetBackground(AltMan.frame.infoSections[type], 0.5, 0.5, 1)
 
     AltMan.UI:IncreaseFrameHeight(AltMan.frame.infoSections[type], AltMan.frame.infoSections[type]["labels"]:GetHeight());
     AltMan.UI:IncreaseMainFrameHeight(AltMan.frame.infoSections[type]:GetHeight());
 
+    -- draw the labels
     AltMan.UI:DrawInfoSectionLabels(type, data)
 
 end
 
 
 ----------------------------------------------------------------------------
--- Draws the main info section
+--
 ----------------------------------------------------------------------------
 function AltMan.UI:DrawInfoSectionLabels(type, data)
     local index = 0
-    for entry, _ in pairs(data) do
+    for _, entry in pairs(data) do
         AltMan.UI:CreateNewString(entry, AltMan.frame.infoSections[type]["labels"], 0, -index*AltMan.constants.presentation.lineheight);
         AltMan.frame.infoSections[type]["labels"][entry]:SetText(AltMan.translations["en"]["labels"][type.."-"..entry]);
         index = index + 1;
+    end
+end
+
+
+----------------------------------------------------------------------------
+--
+----------------------------------------------------------------------------
+function AltMan.UI:PrintInfoSection(type, key, data, index)
+
+    index = index or 0;
+
+    AltMan.frame.infoSections[type][key] = CreateFrame("frame", "", AltMan.frame.infoSections[type]);
+    AltMan.frame.infoSections[type][key]:SetFrameStrata("MEDIUM");
+    AltMan.frame.infoSections[type][key]:SetWidth(AltMan.constants.presentation.altFrameWidth);
+    AltMan.frame.infoSections[type][key]:SetHeight(sizeOfTable(data) * AltMan.constants.presentation.lineheight);
+
+    local positionX = index * AltMan.constants.presentation.altFrameWidth + AltMan.constants.presentation.labelsFrameWidth + (index+1)* AltMan.constants.presentation.frame.paddingVertical;
+    AltMan.frame.infoSections[type][key]:SetPoint("TOPLEFT", positionX, -AltMan.constants.presentation.lineheight); -- we always have a header section even if no string is printed
+    -- AltMan.UI:SetBackground(AltMan.frame.infoSections[type][key], (0.2*index), 0.5, 0)
+
+    local dataIndex = 0;
+    for entry, value in pairs(data) do
+        -- print(entry)
+        AltMan.UI:CreateNewString(entry, AltMan.frame.infoSections[type][key], 0, -dataIndex*AltMan.constants.presentation.lineheight);
+        AltMan.frame.infoSections[type][key][entry]:SetText(value);
+        dataIndex = dataIndex + 1;
     end
 
 end
