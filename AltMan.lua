@@ -35,6 +35,8 @@ end
 ----------------------------------------------------------------------------
 function AltMan:OnLoad()
 
+    AltMan.currentAltGUID = UnitGUID('player');
+
     AltMan.DB:Init();
 
     -- refresh the current character data

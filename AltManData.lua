@@ -37,7 +37,6 @@ AltMan.Data.dataSourcesTypes = {
 ----------------------------------------------------------------------------
 function AltMan.Data:PrepareData()
 
-    AltMan.currentAltGUID = UnitGUID('player');
     AltMan.TotalAlts = sizeOfTable(AltMan.Alts);
 
     AltMan.Data.data = AltMan.Data.data or {}
