@@ -72,3 +72,13 @@ function CompareAlts(t, a, b)
     end
     return false;
 end
+
+----------------------------------------------------------------------------
+-- compares datasources by index
+----------------------------------------------------------------------------
+function CompareDataSources(t, a, b)
+    if (a < b) then
+        return true;
+    end
+    return false;
+end

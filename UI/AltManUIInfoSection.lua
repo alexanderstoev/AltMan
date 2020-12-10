@@ -3,6 +3,8 @@ local _, AltMan = ...;
 -- used to store references to frames
 AltMan.UI = AltMan.UI or {}
 
+local dataOrder = AltMan.Data.dataSourcesTypes
+
 ----------------------------------------------------------------------------
 -- Draws a main info section e.g. server data, daily, weekly etc
 ----------------------------------------------------------------------------
@@ -42,17 +44,24 @@ function AltMan.UI:DrawInfoSection(type, data)
     AltMan.UI:IncreaseMainFrameHeight(AltMan.frame.infoSections[type]:GetHeight());
 
     -- draw the labels
-    AltMan.UI:DrawInfoSectionLabels(type, data)
+    AltMan.UI:DrawInfoSectionLabels(type)
 
 end
 
 ----------------------------------------------------------------------------
 -- Draws the labels for a section
 ----------------------------------------------------------------------------
-function AltMan.UI:DrawInfoSectionLabels(type, data)
-    local index = 0
-    for _, entry in pairs(data) do
+function AltMan.UI:DrawInfoSectionLabels(type)
 
+    local order = dataOrder[type]
+
+    local subType = string.gsub(type, "alt%-data%-", "");
+    if not (subType == type) then
+        order = dataOrder["alt-data"][subType]
+    end
+
+    local index = 0
+    for _, entry in Spairs(order, CompareDataSources) do
         AltMan.UI:CreateNewString(entry, AltMan.frame.infoSections[type]["labels"], 0,
             -index * AltMan.constants.presentation.lineheight);
 
@@ -82,12 +91,20 @@ function AltMan.UI:DrawInfoSubSection(type, key, data, index)
     AltMan.frame.infoSections[type][key]:SetPoint("TOPLEFT", positionX, -AltMan.constants.presentation.lineheight); -- we always have a header section even if no string is printed
     -- AltMan.UI:SetBackground(AltMan.frame.infoSections[type][key], (0.2*index), 0.5, 0)
 
+
+    local order = dataOrder[type]
+
+    local subType = string.gsub(type, "alt%-data%-", "");
+    if not (subType == type) then
+        order = dataOrder["alt-data"][subType]
+    end
+
     local dataIndex = 0;
-    for entry, value in pairs(data) do
-        AltMan.UI:CreateNewString(entry, AltMan.frame.infoSections[type][key], 0,
+    for _, dataKey in Spairs(order, CompareDataSources) do
+        AltMan.UI:CreateNewString(dataKey, AltMan.frame.infoSections[type][key], 0,
             -dataIndex * AltMan.constants.presentation.lineheight);
 
-        AltMan.frame.infoSections[type][key][entry]:SetText(value);
+        AltMan.frame.infoSections[type][key][dataKey]:SetText(data[dataKey]);
 
         dataIndex = dataIndex + 1;
     end
