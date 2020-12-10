@@ -1,0 +1,18 @@
+{
+    "Lua.diagnostics.globals": [
+        "CreateFrame",
+        "SlashCmdList",
+        "UnitGUID",
+        "C_DateAndTime",
+        "C_QuestLog",
+        "C_TaskQuest",
+        "GetQuestProgressBarPercent",
+        "C_MythicPlus",
+        "UnitName",
+        "UnitClass",
+        "UnitLevel",
+        "RAID_CLASS_COLORS",
+        "UIParent",
+        "ReloadUI"
+    ]
+}
