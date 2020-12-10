@@ -15,7 +15,9 @@ main_frame:RegisterEvent("ADDON_LOADED");
 main_frame:RegisterEvent("PLAYER_LEAVING_WORLD");
 main_frame:SetScript("OnEvent", function(self, ...)
     local event, loaded = ...;
-    if (loaded == ADDON_NAME) then AltMan:EventsDispatcher(event) end
+    if (loaded == ADDON_NAME) then
+        AltMan:EventsDispatcher(event)
+    end
 end)
 AltMan.frame = main_frame;
 
@@ -23,7 +25,9 @@ AltMan.frame = main_frame;
 -- Dispatches the events to the proper handlers
 ----------------------------------------------------------------------------
 function AltMan:EventsDispatcher(event)
-    if event == "ADDON_LOADED" then self:OnLoad(); end
+    if event == "ADDON_LOADED" then
+        self:OnLoad();
+    end
 end
 
 ----------------------------------------------------------------------------
@@ -39,37 +43,32 @@ function AltMan:OnLoad()
     AltMan.UI:InitMainFrame();
 
     -- create the basic layout and put labels
-    AltMan.UI:DrawInfoSection("server-data",
-                              AltMan.Data.dataSourcesTypes["server-data"]);
-    AltMan.UI:DrawInfoSection("alt-data-core",
-                              AltMan.Data.dataSourcesTypes["alt-data"]["core"]);
-    AltMan.UI:DrawInfoSection("alt-data-daily",
-                              AltMan.Data.dataSourcesTypes["alt-data"]["daily"]);
-    AltMan.UI:DrawInfoSection("alt-data-weekly",
-                              AltMan.Data.dataSourcesTypes["alt-data"]["weekly"]);
+    AltMan.UI:DrawInfoSection("server-data", AltMan.Data.dataSourcesTypes["server-data"]);
+    AltMan.UI:DrawInfoSection("alt-data-core", AltMan.Data.dataSourcesTypes["alt-data"]["core"]);
+    AltMan.UI:DrawInfoSection("alt-data-daily", AltMan.Data.dataSourcesTypes["alt-data"]["daily"]);
+    AltMan.UI:DrawInfoSection("alt-data-weekly", AltMan.Data.dataSourcesTypes["alt-data"]["weekly"]);
 
     -- fill in data
-    AltMan.UI:PrintInfoSection("server-data", "data",
-                               AltMan.Data:GetData("server-data"));
+    AltMan.UI:PrintInfoSection("server-data", "data", AltMan.Data:GetData("server-data"));
 
     local index = 0;
     for altKey, alt in Spairs(AltMan.Data.data["alt-data"], CompareAlts) do
         AltMan.UI:PrintInfoSection("alt-data-core", altKey, alt["core"], index);
         AltMan.UI:PrintInfoSection("alt-data-daily", altKey, alt["daily"], index);
-        AltMan.UI:PrintInfoSection("alt-data-weekly", altKey, alt["weekly"],
-                                   index);
+        AltMan.UI:PrintInfoSection("alt-data-weekly", altKey, alt["weekly"], index);
         index = index + 1;
     end
 
-    AltMan.UI:IncreaseMainFrameHeight(AltMan.constants.presentation.frame
-                                          .paddingVertical);
+    AltMan.UI:IncreaseMainFrameHeight(AltMan.constants.presentation.frame.paddingVertical);
 end
 
 ----------------------------------------------------------------------------
 -- Displays the main frame of the addon
 ----------------------------------------------------------------------------
 function AltMan:Show()
-    if (shown == true) then return end
+    if (shown == true) then
+        return
+    end
 
     -- refresh the current character data
     AltMan.Data:RefreshCurrentAltData()

@@ -38,8 +38,7 @@ function AltMan.UI:DrawHeader()
 
     AltMan.UI:SetBackground(AltMan.frame.header)
 
-    AltMan.frame.header.title = AltMan.frame.header:CreateFontString(nil, nil,
-                                                                     "GameFontNormalLarge");
+    AltMan.frame.header.title = AltMan.frame.header:CreateFontString(nil, nil, "GameFontNormalLarge");
     AltMan.frame.header.title:SetPoint("TOPLEFT", 7, -7);
     AltMan.frame.header.title:SetText("AltMan")
 
@@ -53,8 +52,7 @@ end
 ----------------------------------------------------------------------------
 function AltMan.UI:GetFrameWidth()
     return AltMan.constants.presentation.labelsFrameWidth + (AltMan.TotalAlts) *
-               AltMan.constants.presentation.altFrameWidth +
-               (AltMan.TotalAlts + 2) *
+               AltMan.constants.presentation.altFrameWidth + (AltMan.TotalAlts + 2) *
                AltMan.constants.presentation.frame.paddingHorizontal;
 end
 
@@ -62,23 +60,26 @@ end
 -- Draws the close button
 ----------------------------------------------------------------------------
 function AltMan.UI:DrawCloseButton()
-    AltMan.frame.header.closeButton = CreateFrame("Button", "CloseButton",
-                                                  AltMan.frame.header,
-                                                  "UIPanelCloseButton");
+    AltMan.frame.header.closeButton = CreateFrame("Button", "CloseButton", AltMan.frame.header, "UIPanelCloseButton");
     AltMan.frame.header.closeButton:ClearAllPoints();
     AltMan.frame.header.closeButton:SetFrameStrata("HIGH");
     AltMan.frame.header.closeButton:SetPoint("TOPRIGHT", 0, 0);
-    AltMan.frame.header.closeButton:SetScript("OnClick",
-                                              function() AltMan:Hide(); end);
+    AltMan.frame.header.closeButton:SetScript("OnClick", function()
+        AltMan:Hide();
+    end);
 end
 
 ----------------------------------------------------------------------------
 -- Shows the main frame of the addon
 ----------------------------------------------------------------------------
-function AltMan.UI:ShowFrame() AltMan.frame:Show(); end
+function AltMan.UI:ShowFrame()
+    AltMan.frame:Show();
+end
 
 ----------------------------------------------------------------------------
 -- Hides the main frame of the addon
 ----------------------------------------------------------------------------
-function AltMan.UI:HideFrame() AltMan.frame:Hide(); end
+function AltMan.UI:HideFrame()
+    AltMan.frame:Hide();
+end
 

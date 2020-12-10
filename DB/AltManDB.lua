@@ -15,7 +15,9 @@ function AltMan.DB:Init()
     AltManDB["version"] = "0.0.1";
 
     for altKey, alt in pairs(AltManDB.alts) do
-        if alt.level == 60 then AltMan.Alts[altKey] = alt; end
+        if alt.level == 60 then
+            AltMan.Alts[altKey] = alt;
+        end
     end
     AltMan.TotalAlts = sizeOfTable(AltMan.Alts);
 end
@@ -23,4 +25,6 @@ end
 ----------------------------------------------------------------------------
 -- stores data in the DB
 ----------------------------------------------------------------------------
-function AltMan.DB:Store(var, val) AltManDB[var] = val end
+function AltMan.DB:Store(var, val)
+    AltManDB[var] = val
+end

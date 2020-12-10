@@ -1,6 +1,8 @@
 local _, AltMan = ...;
 
-if (AltMan.DataSources == nil) then AltMan.DataSources = {} end
+if (AltMan.DataSources == nil) then
+    AltMan.DataSources = {}
+end
 
 AltMan.DataSources.dungeonquests = function()
 
@@ -22,28 +24,26 @@ AltMan.DataSources.dungeonquests = function()
 
             -- check if the quest is marked as completed
             if (C_QuestLog.IsComplete(questID)) then
-                table.insert(returnSrings, questTitle .. ": " ..
-                                 AltMan.translations["en"]["done"]);
+                table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["done"]);
 
                 -- check if the quest is marked as completed
             elseif (C_QuestLog.IsQuestFlaggedCompleted(questID)) then
-                table.insert(returnSrings, questTitle .. ": " ..
-                                 AltMan.translations["en"]["done"]);
+                table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["done"]);
 
                 -- check if we have the quest in the log
             elseif (not (C_QuestLog.GetLogIndexForQuestID(questID) == nil)) then
-                table.insert(returnSrings, questTitle .. ": " ..
-                                 AltMan.translations["en"]["notdone"]);
+                table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["notdone"]);
             end
         end
 
     end
 
     local foundQuests = sizeOfTable(returnSrings);
-    if (foundQuests == 0) then return AltMan.translations["en"]["notfound"]; end
+    if (foundQuests == 0) then
+        return AltMan.translations["en"]["notfound"];
+    end
     if (foundQuests == 1) then
-        table.insert(returnSrings,
-                     AltMan.translations["en"]["secondquestnotfound"])
+        table.insert(returnSrings, AltMan.translations["en"]["secondquestnotfound"])
     end
 
     return table.concat(returnSrings, "\n");

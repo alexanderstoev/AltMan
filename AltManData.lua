@@ -45,7 +45,6 @@ function AltMan.Data:RefreshCurrentAltData()
     AltMan.Data:GetAltData("alt-data-core", true, AltMan.currentAltGUID);
     AltMan.Data:GetAltData("alt-data-daily", true, AltMan.currentAltGUID);
     AltMan.Data:GetAltData("alt-data-weekly", true, AltMan.currentAltGUID);
-
 end
 
 ----------------------------------------------------------------------------
