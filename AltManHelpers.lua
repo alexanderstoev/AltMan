@@ -50,6 +50,10 @@ function spairs(t, order)
 end
 
 
+----------------------------------------------------------------------------
+-- compares alts by name alphabeticaly
+-- and always pushes the current alt on first place
+----------------------------------------------------------------------------
 function compareAlts(t,a,b)
 
     -- push the current alt to the front
