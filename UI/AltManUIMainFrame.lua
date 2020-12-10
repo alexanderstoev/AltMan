@@ -18,7 +18,6 @@ function AltMan.UI:InitMainFrame()
     AltMan.UI:DrawHeader();
 
     AltMan.UI:SetBackground(AltMan.frame)
-    print("done", AltMan.frame:GetHeight())
 end
 
 ----------------------------------------------------------------------------
