@@ -16,11 +16,11 @@ end
 -- sets common formating to strings
 ----------------------------------------------------------------------------
 function AltMan.UI:SetStringFormatting(stringToFormat, isHeading)
-    
+
     local fontSize = AltMan.constants.presentation.fontSize;
     stringToFormat:SetTextColor(0.8, 0.8, 0.8, 1);
     stringToFormat:SetJustifyH("LEFT");
-    
+
     if (isHeading) then
         fontSize = fontSize + 5
         stringToFormat:SetTextColor(0.8, 0.8, 0.1, 1);
@@ -37,7 +37,7 @@ function AltMan.UI:SetBackground(parent, r, g, b)
     parent["background"] = parent:CreateTexture(nil, "BACKGROUND");
     parent["background"]:SetAllPoints();
     parent["background"]:SetDrawLayer("ARTWORK", 1);
-    
+
     if (r == nil) then --if we don't have red value - assuming black (0,0,0)
         r=0
         b=0
@@ -49,7 +49,7 @@ function AltMan.UI:SetBackground(parent, r, g, b)
 
     parent["background"]:SetColorTexture(r, g, b, AltMan.constants.presentation.frame.alpha);
 end
- 
+
 
 ----------------------------------------------------------------------------
 -- Shortcut method to increase the main frame height
