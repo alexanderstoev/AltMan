@@ -2,7 +2,7 @@
 ## Title: AltMan
 ## Notes: Alts menagerie overview and tracking.
 ## Author: ZodiakBG
-## Version: 0.0.1
+## Version: 0.0.2
 ## SavedVariables: AltManDB
 
 AltManTranslations.lua
