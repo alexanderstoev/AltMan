@@ -4,7 +4,7 @@ local _, AltMan = ...;
 AltMan.UI = AltMan.UI or {}
 
 ----------------------------------------------------------------------------
--- Draws the main info section
+-- Draws a main info section e.g. server data, daily, weekly etc
 ----------------------------------------------------------------------------
 function AltMan.UI:DrawInfoSection(type, data)
 
@@ -19,6 +19,7 @@ function AltMan.UI:DrawInfoSection(type, data)
     AltMan.frame.infoSections[type]:SetFrameStrata("MEDIUM");
     AltMan.frame.infoSections[type]:SetPoint("TOPLEFT", AltMan.constants.presentation.frame.paddingHorizontal,
         -AltMan.frame:GetHeight());
+
     AltMan.frame.infoSections[type]:SetWidth(AltMan.UI:GetFrameWidth() -
                                                  AltMan.constants.presentation.frame.paddingHorizontal * 2);
 
@@ -46,23 +47,26 @@ function AltMan.UI:DrawInfoSection(type, data)
 end
 
 ----------------------------------------------------------------------------
---
+-- Draws the labels for a section
 ----------------------------------------------------------------------------
 function AltMan.UI:DrawInfoSectionLabels(type, data)
     local index = 0
     for _, entry in pairs(data) do
+
         AltMan.UI:CreateNewString(entry, AltMan.frame.infoSections[type]["labels"], 0,
             -index * AltMan.constants.presentation.lineheight);
+
         AltMan.frame.infoSections[type]["labels"][entry]:SetText(
             AltMan.translations["en"]["labels"][type .. "-" .. entry]);
+
         index = index + 1;
     end
 end
 
 ----------------------------------------------------------------------------
---
+-- Used to draw the actual server or alts data
 ----------------------------------------------------------------------------
-function AltMan.UI:PrintInfoSection(type, key, data, index)
+function AltMan.UI:DrawInfoSubSection(type, key, data, index)
 
     index = index or 0;
 
@@ -74,16 +78,27 @@ function AltMan.UI:PrintInfoSection(type, key, data, index)
     local positionX = index * AltMan.constants.presentation.altFrameWidth +
                           AltMan.constants.presentation.labelsFrameWidth + (index + 1) *
                           AltMan.constants.presentation.frame.paddingVertical;
+
     AltMan.frame.infoSections[type][key]:SetPoint("TOPLEFT", positionX, -AltMan.constants.presentation.lineheight); -- we always have a header section even if no string is printed
     -- AltMan.UI:SetBackground(AltMan.frame.infoSections[type][key], (0.2*index), 0.5, 0)
 
     local dataIndex = 0;
     for entry, value in pairs(data) do
-        -- print(entry)
         AltMan.UI:CreateNewString(entry, AltMan.frame.infoSections[type][key], 0,
             -dataIndex * AltMan.constants.presentation.lineheight);
+
         AltMan.frame.infoSections[type][key][entry]:SetText(value);
+
         dataIndex = dataIndex + 1;
     end
 
+end
+
+----------------------------------------------------------------------------
+-- refreshes the data prnted on the frame
+----------------------------------------------------------------------------
+function AltMan.UI:RefreshData(type, key, data)
+    for entry, value in pairs(data) do
+        AltMan.frame.infoSections[type][key][entry]:SetText(value);
+    end
 end

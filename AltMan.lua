@@ -49,13 +49,13 @@ function AltMan:OnLoad()
     AltMan.UI:DrawInfoSection("alt-data-weekly", AltMan.Data.dataSourcesTypes["alt-data"]["weekly"]);
 
     -- fill in data
-    AltMan.UI:PrintInfoSection("server-data", "data", AltMan.Data:GetData("server-data"));
+    AltMan.UI:DrawInfoSubSection("server-data", "data", AltMan.Data:GetData("server-data"));
 
     local index = 0;
     for altKey, alt in Spairs(AltMan.Data.data["alt-data"], CompareAlts) do
-        AltMan.UI:PrintInfoSection("alt-data-core", altKey, alt["core"], index);
-        AltMan.UI:PrintInfoSection("alt-data-daily", altKey, alt["daily"], index);
-        AltMan.UI:PrintInfoSection("alt-data-weekly", altKey, alt["weekly"], index);
+        AltMan.UI:DrawInfoSubSection("alt-data-core", altKey, alt["core"], index);
+        AltMan.UI:DrawInfoSubSection("alt-data-daily", altKey, alt["daily"], index);
+        AltMan.UI:DrawInfoSubSection("alt-data-weekly", altKey, alt["weekly"], index);
         index = index + 1;
     end
 
@@ -73,8 +73,16 @@ function AltMan:Show()
     -- refresh the current character data
     AltMan.Data:RefreshCurrentAltData()
 
+    -- fill in data
+    AltMan.UI:RefreshData("server-data", "data", AltMan.Data:GetData("server-data"));
+
+    for altKey, alt in Spairs(AltMan.Data.data["alt-data"], CompareAlts) do
+        AltMan.UI:RefreshData("alt-data-core", altKey, alt["core"]);
+        AltMan.UI:RefreshData("alt-data-daily", altKey, alt["daily"]);
+        AltMan.UI:RefreshData("alt-data-weekly", altKey, alt["weekly"]);
+    end
+
     AltMan.UI:ShowFrame();
-    -- self:PrintAltsData()
 
     shown = true;
 
