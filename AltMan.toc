@@ -28,7 +28,7 @@ DataSources/coreCharacter.lua
 AltManData.lua
 
 UI/AltManConst.lua
-UI/AltManUIHelpers.lua
+UI/AltManUIHelpers.lua 
 UI/AltManUIInfoSection.lua
 UI/AltManUIMainFrame.lua
 UI/AltManUI.lua

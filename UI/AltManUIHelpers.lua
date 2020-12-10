@@ -11,7 +11,6 @@ function AltMan.UI:CreateNewString(name, parent, horizontal, vertical, isHeading
     AltMan.UI:SetStringFormatting(parent[name], isHeading);
 end
 
-
 ----------------------------------------------------------------------------
 -- sets common formating to strings
 ----------------------------------------------------------------------------
@@ -29,7 +28,6 @@ function AltMan.UI:SetStringFormatting(stringToFormat, isHeading)
     stringToFormat:SetFont("Fonts\\FRIZQT__.TTF", fontSize);
 end
 
-
 ----------------------------------------------------------------------------
 -- sets the background to a frame
 ----------------------------------------------------------------------------
@@ -38,18 +36,18 @@ function AltMan.UI:SetBackground(parent, r, g, b)
     parent["background"]:SetAllPoints();
     parent["background"]:SetDrawLayer("ARTWORK", 1);
 
-    if (r == nil) then --if we don't have red value - assuming black (0,0,0)
-        r=0
-        b=0
-        g=0
-    elseif(g == nil) then -- if we have red value, but nor blue - then assuming gray (r,r,r)
-        b=r
-        g=r
+    if (r == nil) then -- if we don't have red value - assuming black (0,0,0)
+        r = 0
+        b = 0
+        g = 0
+    elseif (g == nil) then -- if we have red value, but nor blue - then assuming gray (r,r,r)
+        b = r
+        g = r
     end
 
-    parent["background"]:SetColorTexture(r, g, b, AltMan.constants.presentation.frameAlpha);
+    parent["background"]:SetColorTexture(r, g, b, AltMan.constants.presentation
+                                             .frameAlpha);
 end
-
 
 ----------------------------------------------------------------------------
 -- Shortcut method to increase the main frame height
@@ -57,7 +55,6 @@ end
 function AltMan.UI:IncreaseMainFrameHeight(increase)
     AltMan.UI:IncreaseFrameHeight(AltMan.frame, increase);
 end
-
 
 ----------------------------------------------------------------------------
 -- Increases the height of a providede frame

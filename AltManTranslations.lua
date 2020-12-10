@@ -16,14 +16,14 @@ AltMan.translations = {
             ["alt-data-weekly-dungeonquests"] = "Dungeon quests",
             ["alt-data-weekly-rescuesouls"] = "Rescue souls",
             ["alt-data-weekly-animaquest"] = "Refill anima",
-            ["alt-data-weekly-worldboss"] = "Worldboss",
+            ["alt-data-weekly-worldboss"] = "Worldboss"
         },
 
         ["headings"] = {
             ["server-data"] = "",
             ["alt-data-core"] = "",
             ["alt-data-daily"] = "Daily activities",
-            ["alt-data-weekly"] = "Weekly activities",
+            ["alt-data-weekly"] = "Weekly activities"
         },
 
         ["done"] = "Done",
@@ -37,13 +37,13 @@ AltMan.translations = {
                 ["weeklyreset"] = "", -- SHOULD INCLUDE WHITE SPACE
                 ["today"] = "TODAY",
                 ["in"] = "In ", -- as in "In 2 days" SHOULD INCLUDE WHITE SPACE
-                ["days"] = " days", -- as in "In 2 days" SHOULD INCLUDE WHITE SPACE
+                ["days"] = " days" -- as in "In 2 days" SHOULD INCLUDE WHITE SPACE
             },
             ["dailyreset"] = {
                 ["daily"] = "", -- SHOULD INCLUDE WHITE SPACE
                 ["lessthanhour"] = "Less than an hour",
                 ["in"] = "In ", -- as in "In 2 hours" SHOULD INCLUDE WHITE SPACE
-                ["hours"] = " hours", -- as in "In 2 hours" SHOULD INCLUDE WHITE SPACE
+                ["hours"] = " hours" -- as in "In 2 hours" SHOULD INCLUDE WHITE SPACE
             }
         }
     }

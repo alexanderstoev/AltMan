@@ -11,7 +11,10 @@ AltMan.Data.dataSourcesTypes = {
     ["alt-data"] = {
         ["core"] = {"name", "class", "level"},
         ["daily"] = {"mawdailies", "worldquests", "covenantcalling"},
-        ["weekly"] = {"mythicplus", "dungeonquests", "rescuesouls", "animaquest", "soulash", "worldboss"},
+        ["weekly"] = {
+            "mythicplus", "dungeonquests", "rescuesouls", "animaquest",
+            "soulash", "worldboss"
+        }
     }
 }
 ----------------------------------------------------------------------------
@@ -25,16 +28,14 @@ function AltMan.Data:PrepareData()
     AltMan.Data.data = AltMan.Data.data or {}
 
     AltMan.Data:GetData("server-data", true);
-    
-    for altKey, alt in spairs(AltMan.Alts, compareAlts) do
+
+    for altKey, alt in Spairs(AltMan.Alts, CompareAlts) do
         AltMan.Data:GetAltData("alt-data-core", true, altKey, alt);
         AltMan.Data:GetAltData("alt-data-daily", true, altKey, alt);
         AltMan.Data:GetAltData("alt-data-weekly", true, altKey, alt);
     end
-    
-    
-end
 
+end
 
 ----------------------------------------------------------------------------
 --
@@ -45,10 +46,7 @@ function AltMan.Data:RefreshCurrentAltData()
     AltMan.Data:GetAltData("alt-data-daily", true, AltMan.currentAltGUID);
     AltMan.Data:GetAltData("alt-data-weekly", true, AltMan.currentAltGUID);
 
-    
-
 end
-
 
 ----------------------------------------------------------------------------
 --
@@ -77,7 +75,8 @@ function AltMan.Data:GetAltData(type, refresh, altKey, alt)
 
     -- init the ald data if needed
     AltMan.Data.data["alt-data"] = AltMan.Data.data["alt-data"] or {};
-    AltMan.Data.data["alt-data"][altKey] = AltMan.Data.data["alt-data"][altKey] or {}
+    AltMan.Data.data["alt-data"][altKey] =
+        AltMan.Data.data["alt-data"][altKey] or {}
 
     -- if we don't have data in the destination gather it
     if (refresh or AltMan.Data.data["alt-data"][altKey][type] == nil) then
@@ -92,7 +91,7 @@ function AltMan.Data:GetAltData(type, refresh, altKey, alt)
                 AltMan.Data.data["alt-data"][altKey][type][source] = value;
             end
 
-        -- if this is another alt we need to rely on the saved data
+            -- if this is another alt we need to rely on the saved data
         else
             for _, source in pairs(dataSources) do
                 local value = alt[source] or "N/A";
