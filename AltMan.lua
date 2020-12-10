@@ -82,6 +82,8 @@ function AltMan:Show()
         AltMan.UI:RefreshData("alt-data-weekly", altKey, alt["weekly"]);
     end
 
+    AltMan.UI:updateHeights();
+
     AltMan.UI:ShowFrame();
 
     shown = true;

@@ -30,7 +30,7 @@ AltMan.translations = {
         ["notdone"] = "To do",
         ["notfound"] = "Not found",
         ["secondquestnotfound"] = "Second quest not found",
-        ["worldquestsreminder"] = "Check for good world quest rewards",
+        ["worldquestsreminder"] = "Check for good \nworld quest rewards",
 
         ["maininfo"] = {
             ["weeklyreset"] = {

@@ -4,9 +4,11 @@ AltMan.constants = {}
 AltMan.constants.presentation = {}
 
 AltMan.constants.presentation.fontSize = 14
-AltMan.constants.presentation.lineheight = AltMan.constants.presentation.fontSize * 2
+AltMan.constants.presentation.textPadding = 10
+AltMan.constants.presentation.lineheight = AltMan.constants.presentation.fontSize + AltMan.constants.presentation.textPadding
 
-AltMan.constants.presentation.labelsFrameWidth = 130
+
+AltMan.constants.presentation.labelsFrameWidth = 180
 AltMan.constants.presentation.altFrameWidth = 200
 AltMan.constants.presentation.frameAlpha = 0.8
 

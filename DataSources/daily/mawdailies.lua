@@ -25,14 +25,14 @@ AltMan.DataSources.mawdailies = function()
             if not (remainingMinutes == nil) then
                 -- check if the quest is marked as completed
                 if (C_QuestLog.IsComplete(questID)) then
-                    table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["done"]);
+                    table.insert(returnSrings, questTitle .. ":\n" .. AltMan.translations["en"]["done"]);
 
                     -- check if the quest is marked as completed
                 elseif (C_QuestLog.IsQuestFlaggedCompleted(questID)) then
-                    table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["done"]);
+                    table.insert(returnSrings, questTitle .. ":\n" .. AltMan.translations["en"]["done"]);
 
                 else
-                    table.insert(returnSrings, questTitle .. ": " .. remainingMinutes .. " mins remaining");
+                    table.insert(returnSrings, questTitle .. ":\n" .. remainingMinutes .. " mins remaining");
                 end
             end
         end

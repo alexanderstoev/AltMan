@@ -31,8 +31,6 @@ function AltMan.UI:DrawInfo(data)
     local newFrameHeight = AltMan.constants.presentation.lineheight * (index)
     AltMan.frame.maininfo:SetHeight(newFrameHeight);
 
-    -- AltMan.UI:SetBackground(AltMan.frame.maininfo, 1, 0.5, 0)
-
     -- update the main frame height
     AltMan.UI:IncreaseMainFrameHeight(newFrameHeight);
 
@@ -79,8 +77,6 @@ function AltMan.UI:DrawAltsInfo()
 
     -- update the main frame height
     AltMan.UI:IncreaseMainFrameHeight(AltMan.frame.altsinfo:GetHeight());
-
-    -- AltMan.UI:SetBackground(AltMan.frame.altsinfo, 0.5, 0.5, 0)
 end
 
 function AltMan.UI:DrawAltCoreData()
@@ -99,9 +95,6 @@ function AltMan.UI:DrawAltCoreData()
 
     -- update the main frame height
     AltMan.UI:IncreaseFrameHeight(AltMan.frame.altsinfo, newFrameHeight);
-
-    AltMan.UI:SetBackground(AltMan.frame.altsinfo.core, 0, 0.2, 0.2)
-
 end
 
 function AltMan.UI:DrawColumn(dataObjs)
@@ -121,8 +114,6 @@ function AltMan.UI:DrawDailyActivities()
 
     AltMan.frame.altsinfo.daily:SetHeight(newFrameHeight);
     AltMan.UI:IncreaseFrameHeight(AltMan.frame.altsinfo, newFrameHeight);
-    -- AltMan.UI:SetBackground(AltMan.frame.altsinfo.daily, 0, 0.2, 0.2)
-
 end
 
 function AltMan.UI:DrawWeeklyActivities()
@@ -139,7 +130,6 @@ function AltMan.UI:DrawWeeklyActivities()
 
     AltMan.frame.altsinfo.weekly:SetHeight(newFrameHeight);
     AltMan.UI:IncreaseFrameHeight(AltMan.frame.altsinfo, newFrameHeight);
-    -- AltMan.UI:SetBackground(AltMan.frame.altsinfo.weekly, 0.2, 0.2, 0)
 end
 
 ----------------------------------------------------------------------------

@@ -19,8 +19,8 @@ function AltMan.UI:DrawInfoSection(type, data)
     -- create and setup the frame
     AltMan.frame.infoSections[type] = CreateFrame("frame", "", AltMan.frame);
     AltMan.frame.infoSections[type]:SetFrameStrata("MEDIUM");
-    AltMan.frame.infoSections[type]:SetPoint("TOPLEFT", AltMan.constants.presentation.frame.paddingHorizontal,
-        -AltMan.frame:GetHeight());
+    AltMan.frame.infoSections[type]:SetPoint("TOPLEFT", AltMan.frame, "TOPLEFT",
+        AltMan.constants.presentation.frame.paddingHorizontal, -AltMan.frame:GetHeight());
 
     AltMan.frame.infoSections[type]:SetWidth(AltMan.UI:GetFrameWidth() -
                                                  AltMan.constants.presentation.frame.paddingHorizontal * 2);
@@ -33,7 +33,8 @@ function AltMan.UI:DrawInfoSection(type, data)
     -- create and setup the labels frame
     AltMan.frame.infoSections[type]["labels"] = CreateFrame("frame", "", AltMan.frame.infoSections[type]);
     AltMan.frame.infoSections[type]["labels"]:SetFrameStrata("MEDIUM");
-    AltMan.frame.infoSections[type]["labels"]:SetPoint("TOPLEFT", 0, -AltMan.frame.infoSections[type]:GetHeight());
+    AltMan.frame.infoSections[type]["labels"]:SetPoint("TOPLEFT", AltMan.frame.infoSections[type], "TOPLEFT", 0,
+        -AltMan.frame.infoSections[type]:GetHeight());
     AltMan.frame.infoSections[type]["labels"]:SetWidth(AltMan.constants.presentation.labelsFrameWidth);
 
     -- adjust the frames heights
@@ -45,7 +46,6 @@ function AltMan.UI:DrawInfoSection(type, data)
 
     -- draw the labels
     AltMan.UI:DrawInfoSectionLabels(type)
-
 end
 
 ----------------------------------------------------------------------------
@@ -88,8 +88,8 @@ function AltMan.UI:DrawInfoSubSection(type, key, data, index)
                           AltMan.constants.presentation.labelsFrameWidth + (index + 1) *
                           AltMan.constants.presentation.frame.paddingVertical;
 
-    AltMan.frame.infoSections[type][key]:SetPoint("TOPLEFT", positionX, -AltMan.constants.presentation.lineheight); -- we always have a header section even if no string is printed
-    -- AltMan.UI:SetBackground(AltMan.frame.infoSections[type][key], (0.2*index), 0.5, 0)
+    AltMan.frame.infoSections[type][key]:SetPoint("TOPLEFT", AltMan.frame.infoSections[type], "TOPLEFT", positionX,
+        -AltMan.constants.presentation.lineheight); -- we always have a header section even if no string is printed
 
     local order = dataOrder[type]
 
@@ -123,5 +123,75 @@ end
 function AltMan.UI:RefreshData(type, key, data)
     for entry, value in pairs(data) do
         AltMan.frame.infoSections[type][key][entry]:SetText(value);
+    end
+end
+
+----------------------------------------------------------------------------
+-- refreshes the data prnted on the frame
+----------------------------------------------------------------------------
+function AltMan.UI:updateHeights()
+
+    -- server data section will not move. 
+    -- famous last words?
+    local newHeight = 0;
+    -- check alt core data
+    local _, _, _, _, dy = AltMan.frame.infoSections["alt-data-core"]:GetPoint();
+    newHeight = HandleAltSection("core");
+
+    AltMan.frame.infoSections["alt-data-daily"]:SetPoint("TOPLEFT", AltMan.frame, "TOPLEFT",
+        AltMan.constants.presentation.frame.paddingHorizontal, -newHeight -
+            AltMan.constants.presentation.frame.paddingVertical + dy);
+    _, _, _, _, dy = AltMan.frame.infoSections["alt-data-daily"]:GetPoint();
+    newHeight = HandleAltSection("daily");
+
+    AltMan.frame.infoSections["alt-data-weekly"]:SetPoint("TOPLEFT", AltMan.frame, "TOPLEFT",
+        AltMan.constants.presentation.frame.paddingHorizontal, -newHeight -
+            AltMan.constants.presentation.frame.paddingVertical + dy);
+    _, _, _, _, dy = AltMan.frame.infoSections["alt-data-weekly"]:GetPoint()
+    newHeight = HandleAltSection("weekly");
+
+    local newMainFrameHeigt = -dy + newHeight + AltMan.constants.presentation.frame.paddingVertical;
+
+    AltMan.frame:SetHeight(newMainFrameHeigt)
+end
+
+function HandleAltSection(type)
+
+    local infoSection = "alt-data-" .. type;
+
+    local currentSubSectionHeight = 0;
+    for _, dataKey in Spairs(dataOrder["alt-data"][type], CompareDataSources) do
+        local maxHeight = 0;
+
+        for altKey, alt in Spairs(AltMan.Data.data["alt-data"], CompareAlts) do
+
+            local currentStringHeight = AltMan.frame.infoSections[infoSection][altKey][dataKey]:GetStringHeight();
+            if (maxHeight < currentStringHeight) then
+                maxHeight = currentStringHeight
+            end
+
+        end
+        MoveAltRow(infoSection, dataKey, currentSubSectionHeight)
+        currentSubSectionHeight = currentSubSectionHeight - maxHeight - AltMan.constants.presentation.textPadding;
+    end
+
+    for altKey, alt in Spairs(AltMan.Data.data["alt-data"], CompareAlts) do
+        AltMan.frame.infoSections[infoSection][altKey]:SetHeight(-currentSubSectionHeight);
+    end
+
+    local newHeight = -currentSubSectionHeight + AltMan.constants.presentation.lineheight
+
+    AltMan.frame.infoSections[infoSection]:SetHeight(newHeight);
+    return newHeight;
+end
+
+function MoveAltRow(infoSection, dataKey, newTop)
+
+    AltMan.frame.infoSections[infoSection]["labels"][dataKey]:SetPoint("TOPLEFT",
+        AltMan.frame.infoSections[infoSection]["labels"], "TOPLEFT", 0, newTop)
+
+    for altKey, alt in Spairs(AltMan.Data.data["alt-data"], CompareAlts) do
+        AltMan.frame.infoSections[infoSection][altKey][dataKey]:SetPoint("TOPLEFT",
+            AltMan.frame.infoSections[infoSection][altKey], "TOPLEFT", 0, newTop)
     end
 end

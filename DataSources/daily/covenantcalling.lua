@@ -21,11 +21,11 @@ AltMan.DataSources.covenantcalling = function()
 
             -- check if the quest is marked as completed
             if (C_QuestLog.IsComplete(questID)) then
-                table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["done"]);
+                table.insert(returnSrings, questTitle .. ":\n" .. AltMan.translations["en"]["done"]);
 
                 -- check if the quest is marked as completed
             elseif (C_QuestLog.IsQuestFlaggedCompleted(questID)) then
-                table.insert(returnSrings, questTitle .. ": " .. AltMan.translations["en"]["done"]);
+                table.insert(returnSrings, questTitle .. ":\n" .. AltMan.translations["en"]["done"]);
 
                 -- check if we have the quest in the log
             elseif (not (C_QuestLog.GetLogIndexForQuestID(questID) == nil)) then
@@ -33,9 +33,9 @@ AltMan.DataSources.covenantcalling = function()
 
                 if (not (data == nil)) then
                     if (data.type == "progressbar") then
-                        table.insert(returnSrings, questTitle .. ": " .. GetQuestProgressBarPercent(questID) .. "%");
+                        table.insert(returnSrings, questTitle .. ":\n" .. GetQuestProgressBarPercent(questID) .. "%");
                     else
-                        table.insert(returnSrings, questTitle .. ": " .. data.numFulfilled .. "/" .. data.numRequired);
+                        table.insert(returnSrings, questTitle .. ":\n" .. data.numFulfilled .. "/" .. data.numRequired);
                     end
                 end
             end
