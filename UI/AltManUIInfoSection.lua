@@ -118,7 +118,7 @@ function AltMan.UI:DrawInfoSubSection(type, key, data, index)
 end
 
 ----------------------------------------------------------------------------
--- refreshes the data prnted on the frame
+-- refreshes the data printed on the frame
 ----------------------------------------------------------------------------
 function AltMan.UI:RefreshData(type, key, data)
     for entry, value in pairs(data) do
@@ -126,17 +126,48 @@ function AltMan.UI:RefreshData(type, key, data)
     end
 end
 
+function AltMan.UI:AddAltsBackground()
+
+    local _, _, _, _, dy = AltMan.frame.infoSections["alt-data-core"]:GetPoint();
+    local index = 0;
+    local w = AltMan.constants.presentation.altFrameWidth + AltMan.constants.presentation.frame.paddingHorizontal * 2;
+    local lw = AltMan.constants.presentation.labelsFrameWidth;
+    local wh = AltMan.frame:GetHeight();
+    local r, g, b;
+
+    AltMan.frame.altsBackround = {}
+    for altKey, alt in Spairs(AltMan.Data.data["alt-data"], CompareAlts) do
+        AltMan.frame.altsBackround[altKey] = CreateFrame("frame", "", AltMan.frame);
+        AltMan.frame.altsBackround[altKey]:SetFrameStrata("LOW");
+        AltMan.frame.altsBackround[altKey]:SetPoint("TOPLEFT", AltMan.frame, "TOPLEFT", index * w + lw, dy);
+        AltMan.frame.altsBackround[altKey]:SetWidth(w);
+        AltMan.frame.altsBackround[altKey]:SetHeight(wh + dy);
+
+        local altClass = alt.core.class;
+        altClass = string.gsub(altClass, "%s+", ""); -- remove spaces e.g. Demon hunter -> Demonhunter
+        altClass = string.upper(altClass); -- transform to uppercase e.g. Demonhunter -> DEMONHUNTER
+
+        if (math.fmod(index, 2) == 0) then
+            AltMan.UI:SetBackground(AltMan.frame.altsBackround[altKey], 0.1);
+        end
+        index = index + 1
+    end
+end
+
 ----------------------------------------------------------------------------
--- refreshes the data prnted on the frame
+--
 ----------------------------------------------------------------------------
 function AltMan.UI:updateHeights()
 
     -- server data section will not move. 
     -- famous last words?
     local newHeight = 0;
+    local altsBGStartPoint = 0;
+
     -- check alt core data
     local _, _, _, _, dy = AltMan.frame.infoSections["alt-data-core"]:GetPoint();
     newHeight = HandleAltSection("core");
+    altsBGStartPoint = dy;
 
     AltMan.frame.infoSections["alt-data-daily"]:SetPoint("TOPLEFT", AltMan.frame, "TOPLEFT",
         AltMan.constants.presentation.frame.paddingHorizontal, -newHeight -
@@ -153,6 +184,10 @@ function AltMan.UI:updateHeights()
     local newMainFrameHeigt = -dy + newHeight + AltMan.constants.presentation.frame.paddingVertical;
 
     AltMan.frame:SetHeight(newMainFrameHeigt)
+
+    for k, v in pairs(AltMan.frame.altsBackround) do
+        AltMan.frame.altsBackround[k]:SetHeight(newMainFrameHeigt + altsBGStartPoint);
+    end
 end
 
 function HandleAltSection(type)

@@ -20,8 +20,8 @@ AltMan.translations = {
         },
 
         ["headings"] = {
-            ["server-data"] = "",
-            ["alt-data-core"] = "",
+            ["server-data"] = "Server",
+            ["alt-data-core"] = "Alts",
             ["alt-data-daily"] = "Daily activities",
             ["alt-data-weekly"] = "Weekly activities"
         },

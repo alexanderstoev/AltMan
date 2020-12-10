@@ -47,7 +47,7 @@ function AltMan:OnLoad()
     AltMan.UI:DrawInfoSection("alt-data-core", AltMan.Data.dataSourcesTypes["alt-data"]["core"]);
     AltMan.UI:DrawInfoSection("alt-data-daily", AltMan.Data.dataSourcesTypes["alt-data"]["daily"]);
     AltMan.UI:DrawInfoSection("alt-data-weekly", AltMan.Data.dataSourcesTypes["alt-data"]["weekly"]);
-
+    AltMan.UI:AddAltsBackground();
     -- fill in data
     AltMan.UI:DrawInfoSubSection("server-data", "data", AltMan.Data:GetData("server-data"));
 
