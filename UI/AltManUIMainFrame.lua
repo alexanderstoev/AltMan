@@ -11,13 +11,13 @@ function AltMan.UI:InitMainFrame()
 
     AltMan.frame:Hide(); -- we need to hide the frame since this method is called on load
     AltMan.frame:SetFrameStrata("MEDIUM");
-    AltMan.frame:SetWidth(AltMan.UI:GetFrameWidth()); -- Set these to whatever height/width is needed 
+    AltMan.frame:SetWidth(AltMan.UI:GetFrameWidth()); -- Set these to whatever height/width is needed
     AltMan.frame:EnableMouse(true)
     AltMan.frame:SetMovable(true)
     AltMan.frame:SetPoint("CENTER",0,0);
-    
+
     AltMan.UI:DrawHeader();
-    
+
     AltMan.UI:SetBackground(AltMan.frame)
     print("done", AltMan.frame:GetHeight())
 end
@@ -30,7 +30,7 @@ function AltMan.UI:DrawHeader()
     AltMan.frame.header = CreateFrame("frame", "", AltMan.frame);
 	AltMan.frame.header:SetFrameStrata("MEDIUM");
 	AltMan.frame.header:SetPoint("TOPLEFT", 0, 0);
-    
+
     local newFrameHeight = AltMan.constants.presentation.header.height
     AltMan.frame.header:SetHeight(newFrameHeight);
     AltMan.frame.header:SetWidth(AltMan.UI:GetFrameWidth());
@@ -39,22 +39,25 @@ function AltMan.UI:DrawHeader()
     AltMan.UI:IncreaseMainFrameHeight(newFrameHeight);
 
     AltMan.UI:SetBackground(AltMan.frame.header)
-    
+
     AltMan.frame.header.title = AltMan.frame.header:CreateFontString(nil, nil, "GameFontNormalLarge");
     AltMan.frame.header.title:SetPoint("TOPLEFT", 7, -7);
     AltMan.frame.header.title:SetText("AltMan")
-    
+
     AltMan.UI:DrawCloseButton();
 end
 
 
 ----------------------------------------------------------------------------
--- calculates the main frame width based on 
+-- calculates the main frame width based on
 -- the number of alts + 1 (because of the labels column)
 -- the width for a column
 ----------------------------------------------------------------------------
 function AltMan.UI:GetFrameWidth()
-    return (AltMan.TotalAlts ) * AltMan.constants.presentation.table.cellwidth + AltMan.constants.presentation.labelsFrameWidth;
+    return
+        AltMan.constants.presentation.labelsFrameWidth +
+        (AltMan.TotalAlts) * AltMan.constants.presentation.altFrameWidth +
+        (AltMan.TotalAlts + 2) * AltMan.constants.presentation.frame.paddingHorizontal;
 end
 
 
