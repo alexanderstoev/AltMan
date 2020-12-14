@@ -22,7 +22,7 @@ AltMan.DataSources.mawdailies = function()
             -- chck if the quest is taken
             if (not C_QuestLog.IsOnQuest(questID)) then
                 table.insert(returnSrings,
-                    questTitle .. ":\n" .. AltMan.translations["en"]["nottaken"] .. ' / ' ..
+                    questTitle .. ":\n" .. AltMan.translations["en"]["nottaken"] .. ' - ' ..
                         GetRemainingTime(remainingMinutes * 60) .. " remaining");
 
             -- check if the quest is marked as completed
@@ -40,11 +40,11 @@ AltMan.DataSources.mawdailies = function()
                 if (not (data == nil)) then
                     if (data.type == "progressbar") then
                         table.insert(returnSrings,
-                            questTitle .. ":\n" .. GetQuestProgressBarPercent(questID) .. "%" .. ' / ' ..
+                            questTitle .. ":\n" .. GetQuestProgressBarPercent(questID) .. "%" .. ' - ' ..
                                 GetRemainingTime(remainingMinutes * 60) .. " remaining");
                     else
                         table.insert(returnSrings,
-                            questTitle .. ":\n" .. data.numFulfilled .. "/" .. data.numRequired .. ' / ' ..
+                            questTitle .. ":\n" .. data.numFulfilled .. "/" .. data.numRequired .. ' - ' ..
                                 GetRemainingTime(remainingMinutes * 60) .. " remaining");
                     end
                 end
@@ -63,39 +63,3 @@ AltMan.DataSources.mawdailies = function()
 
     return table.concat(returnSrings, "\n \n");
 end
-
---     local returnSrings = {}
-
---     for _, questID in pairs(questIDs) do
-
---         -- get quest title
---         local questTitle = C_QuestLog.GetTitleForQuestID(questID);
-
---         if (not (questTitle == nil)) then
-
---             -- get quest remainig minutes
---             -- it will be nil if the quest is not available
---             local remainingMinutes = C_TaskQuest.GetQuestTimeLeftMinutes(questID)
-
---             if not (remainingMinutes == nil) then
---                 -- check if the quest is marked as completed
---                 if (C_QuestLog.IsComplete(questID)) then
---                     table.insert(returnSrings, questTitle .. ":\n" .. AltMan.translations["en"]["done"]);
-
---                     -- check if the quest is marked as completed
---                 elseif (C_QuestLog.IsQuestFlaggedCompleted(questID)) then
---                     table.insert(returnSrings, questTitle .. ":\n" .. AltMan.translations["en"]["done"]);
-
---                 else
---                     table.insert(returnSrings, questTitle .. ":\n" .. remainingMinutes .. " mins remaining");
---                 end
---             end
---         end
---     end
-
---     local foundQuests = sizeOfTable(returnSrings);
---     if (foundQuests == 0) then
---         return AltMan.translations["en"]["notfound"];
---     end
---     return table.concat(returnSrings, "\n");
--- end
