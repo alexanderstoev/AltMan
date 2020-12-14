@@ -37,13 +37,16 @@ AltMan.translations = {
             ["weeklyreset"] = {
                 ["weeklyreset"] = "", -- SHOULD INCLUDE WHITE SPACE
                 ["today"] = "TODAY",
-                ["in"] = "In ", -- as in "In 2 days" SHOULD INCLUDE WHITE SPACE
-                ["days"] = " days" -- as in "In 2 days" SHOULD INCLUDE WHITE SPACE
+                ["tomorrow"] = "Tomorrow",
+                ["in"] = "In " -- as in "In 2 days" SHOULD INCLUDE WHITE SPACE
             },
             ["dailyreset"] = {
                 ["daily"] = "", -- SHOULD INCLUDE WHITE SPACE
+                ["in"] = "In" -- as in "In 2 hours"
+            }
+        },
         ["time"] = {
-                ["lessthanhour"] = "Less than an hour",
+            ["lessthanhour"] = "Less than an hour",
             ["minute"] = "minute",
             ["minutes"] = "minutes",
             ["hour"] = "hour",
