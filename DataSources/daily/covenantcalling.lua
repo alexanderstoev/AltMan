@@ -25,7 +25,7 @@ AltMan.DataSources.covenantcalling = function()
             -- chck if the quest is taken
             if (not C_QuestLog.IsOnQuest(questID)) then
                 table.insert(returnSrings,
-                    questTitle .. ":\n" .. AltMan.translations["en"]["nottaken"] .. ' / ' ..
+                    questTitle .. ":\n" .. AltMan.translations["en"]["nottaken"] .. ' - ' ..
                         GetRemainingTime(remainingMinutes * 60) .. " remaining");
 
             -- check if the quest is marked as completed
@@ -43,11 +43,11 @@ AltMan.DataSources.covenantcalling = function()
                 if (not (data == nil)) then
                     if (data.type == "progressbar") then
                         table.insert(returnSrings,
-                            questTitle .. ":\n" .. GetQuestProgressBarPercent(questID) .. "%" .. ' / ' ..
+                            questTitle .. ":\n" .. GetQuestProgressBarPercent(questID) .. "%" .. ' - ' ..
                                 GetRemainingTime(remainingMinutes * 60) .. " remaining");
                     else
                         table.insert(returnSrings,
-                            questTitle .. ":\n" .. data.numFulfilled .. "/" .. data.numRequired .. ' / ' ..
+                            questTitle .. ":\n" .. data.numFulfilled .. "/" .. data.numRequired .. ' - ' ..
                                 GetRemainingTime(remainingMinutes * 60) .. " remaining");
                     end
                 end
