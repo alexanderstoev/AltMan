@@ -8,7 +8,7 @@ AltMan.DataSources.covenantcalling = function()
 
     -- anima reservoir quest IDs
     -- https://shadowlands.wowhead.com/search?q=Replenish+the+Reservoir
-    local questIDs = {60424, 60419, 60418, 60425, 60430, 60429, 60434, 60432, 60380, 60372, 60391, 60393, 60395, 60400,
+    local questIDs = {60424, 60419, 60418, 60425,60426,60427, 60430, 60429, 60434, 60432, 60380, 60372, 60391, 60393, 60395, 60400,
                       60465, 60439, 60442, 60447, 60450, 60358, 60415, 60403, 60407, 60412}
 
     local returnSrings = {}
