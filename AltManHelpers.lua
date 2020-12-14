@@ -22,6 +22,33 @@ function Trim(s)
 end
 
 ----------------------------------------------------------------------------
+-- format time
+----------------------------------------------------------------------------
+function GetRemainingTime(seconds)
+
+    if (seconds < AltMan.constants.secondsinhalfhour) then
+        -- return minutes
+        return RoundNumber(seconds / 60) .. " " .. AltMan.translations["en"]["time"]["minutes"]
+    elseif (seconds < AltMan.constants.secondsinhour) then
+        return AltMan.translations["en"]["time"]["lessthanhour"];
+    elseif (seconds < AltMan.constants.secondsinday) then
+        -- return hours
+        return RoundNumber(seconds / AltMan.constants.secondsinhour) .. " " ..
+                   AltMan.translations["en"]["time"]["hours"]
+    else
+        -- return days
+        return RoundNumber(seconds / AltMan.constants.secondsinday) .. " " .. AltMan.translations["en"]["time"]["days"]
+    end
+end
+
+----------------------------------------------------------------------------
+-- round a number
+----------------------------------------------------------------------------
+function RoundNumber(number)
+    return math.floor(0.5 + number);
+end
+
+----------------------------------------------------------------------------
 -- iterates over the table in a sorted order
 -- more info on stackoverflow:
 -- https://stackoverflow.com/questions/15706270/sort-a-table-in-lua

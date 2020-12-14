@@ -24,3 +24,4 @@ AltMan.constants.presentation.frame.paddingHorizontal = 10
 
 AltMan.constants.secondsinday = 60 * 60 * 24
 AltMan.constants.secondsinhour = 60 * 60
+AltMan.constants.secondsinhalfhour = 30 * 60

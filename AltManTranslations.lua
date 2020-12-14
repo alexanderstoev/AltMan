@@ -29,6 +29,7 @@ AltMan.translations = {
         ["done"] = "Done",
         ["notdone"] = "To do",
         ["notfound"] = "Not found",
+        ["nottaken"] = "Not taken",
         ["secondquestnotfound"] = "Second quest not found",
         ["worldquestsreminder"] = "Check for good \nworld quest rewards",
 
@@ -41,10 +42,14 @@ AltMan.translations = {
             },
             ["dailyreset"] = {
                 ["daily"] = "", -- SHOULD INCLUDE WHITE SPACE
+        ["time"] = {
                 ["lessthanhour"] = "Less than an hour",
-                ["in"] = "In ", -- as in "In 2 hours" SHOULD INCLUDE WHITE SPACE
-                ["hours"] = " hours" -- as in "In 2 hours" SHOULD INCLUDE WHITE SPACE
-            }
+            ["minute"] = "minute",
+            ["minutes"] = "minutes",
+            ["hour"] = "hour",
+            ["hours"] = "hours",
+            ["day"] = "day",
+            ["days"] = "days"
         }
     }
 }
