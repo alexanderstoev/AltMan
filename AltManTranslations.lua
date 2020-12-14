@@ -45,6 +45,11 @@ AltMan.translations = {
                 ["in"] = "In" -- as in "In 2 hours"
             }
         },
+        ["mythicplus"] = {
+            ["tier1"] = "Complete one",
+            ["tier4"] = "Complete four",
+            ["tier10"] = "Complete ten",
+        },
         ["time"] = {
             ["lessthanhour"] = "Less than an hour",
             ["minute"] = "minute",
