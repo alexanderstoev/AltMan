@@ -28,15 +28,15 @@ AltMan.DataSources.covenantcalling = function()
                     questTitle .. ":\n" .. AltMan.translations["en"]["nottaken"] .. ' / ' ..
                         GetRemainingTime(remainingMinutes * 60) .. " remaining");
 
-                -- check if the quest is marked as completed
+            -- check if the quest is marked as completed
             elseif (C_QuestLog.IsComplete(questID)) then
                 table.insert(returnSrings, questTitle .. ":\n" .. AltMan.translations["en"]["done"]);
 
-                -- check if the quest is marked as completed
+            -- check if the quest is marked as completed
             elseif (C_QuestLog.IsQuestFlaggedCompleted(questID)) then
                 table.insert(returnSrings, questTitle .. ":\n" .. AltMan.translations["en"]["done"]);
 
-                -- check if we have the quest in the log
+            -- check if we have the quest in the log
             elseif (not (C_QuestLog.GetLogIndexForQuestID(questID) == nil)) then
                 local data = C_QuestLog.GetQuestObjectives(questID)[1]
 
