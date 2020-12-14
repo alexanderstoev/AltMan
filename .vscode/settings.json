@@ -13,6 +13,8 @@
         "UnitLevel",
         "RAID_CLASS_COLORS",
         "UIParent",
-        "ReloadUI"
+        "ReloadUI",
+        "C_WeeklyRewards",
+        "Enum"
     ]
 }
