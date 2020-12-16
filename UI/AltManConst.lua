@@ -13,7 +13,7 @@ AltMan.constants.presentation.evenCharGrey = 0.1
 
 AltMan.constants.presentation.labelsFrameWidth = 180
 AltMan.constants.presentation.altFrameWidth = 250
-AltMan.constants.presentation.frameAlpha = 0.8
+AltMan.constants.presentation.frameAlpha = 0.9
 
 AltMan.constants.presentation.header = {}
 AltMan.constants.presentation.header.height = 30
