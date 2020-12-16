@@ -22,6 +22,15 @@ main_frame:SetScript("OnEvent", function(self, ...)
 end)
 AltMan.frame = main_frame;
 
+-- close on ESC
+main_frame:EnableKeyboard(1);
+main_frame:SetScript("OnKeyDown", function(self, key)
+    --	This can be checked for the ESC key, but we'll check for what the keybind uses
+    if GetBindingFromClick(key) == "TOGGLEGAMEMENU" then
+        AltMan:Hide()
+    end
+end);
+
 ----------------------------------------------------------------------------
 -- Dispatches the events to the proper handlers
 ----------------------------------------------------------------------------
