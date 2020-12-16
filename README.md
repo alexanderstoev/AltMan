@@ -1,7 +1,10 @@
 # AltMan
-A World of Warcraft addon for managing alt information and handy reminders for what to do
-Tracks only max level characters
-Displays handy info for daily and weekly reset
+A World of Warcraft addon for managing alt information and handy reminders for what to do.
+
+Tracks only max level characters.
+
+Displays handy info for daily and weekly reset.
+
 
 ## Daily activities
 * Tracks covenant callings and displays remainig time
