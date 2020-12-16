@@ -10,24 +10,26 @@ AltMan.DataSources.soulash = function()
     -- https://www.wowhead.com/quest=62935/remnants-of-hope
     local questIDs = {62935, 62966, 62969, 60146, 62836}
 
+    local returnSrings = {}
+
     for _, questID in pairs(questIDs) do
 
-        -- check if the quest is marked as completed
-        if (C_QuestLog.IsComplete(questID)) then
-            return AltMan.translations["en"]["done"];
+        local questTitle = C_QuestLog.GetTitleForQuestID(questID);
+
+        -- check if the quest is active
+        if (not (questTitle == nil)) then
 
             -- check if the quest is marked as completed
-        elseif (C_QuestLog.IsQuestFlaggedCompleted(questID)) then
-            return AltMan.translations["en"]["done"];
-
-            -- check if we have the quest in the log
-        elseif (not (C_QuestLog.GetLogIndexForQuestID(questID) == nil)) then
-            local data = C_QuestLog.GetQuestObjectives(questID)[1]
-            if (not (data == nil)) then
-                return data.numFulfilled .. "/" .. data.numRequired;
+            if (not (C_QuestLog.IsComplete(questID) or C_QuestLog.IsQuestFlaggedCompleted(questID))) then
+                table.insert(returnSrings, questTitle .. ":\n" .. AltMan.translations["en"]["notdone"]);
             end
         end
     end
 
-    return AltMan.translations["en"]["notfound"];
+    local foundQuests = sizeOfTable(returnSrings);
+    if (foundQuests == 0) then
+        return AltMan.translations["en"]["done"];
+
+    end
+    return table.concat(returnSrings, "\n \n");
 end
