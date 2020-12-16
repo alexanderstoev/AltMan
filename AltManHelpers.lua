@@ -95,7 +95,7 @@ function CompareAlts(t, a, b)
     end
 
     -- sort alphabeticaly
-    if (t[a].name < t[b].name) then
+    if (t[a].core.name < t[b].core.name) then
         return true;
     end
     return false;
