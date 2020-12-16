@@ -29,6 +29,7 @@ AltMan.translations = {
         ["done"] = "Done",
         ["notdone"] = "To do",
         ["notfound"] = "Not found",
+        ["nottaken"] = "Not taken",
         ["secondquestnotfound"] = "Second quest not found",
         ["worldquestsreminder"] = "Check for good \nworld quest rewards",
 
@@ -36,15 +37,27 @@ AltMan.translations = {
             ["weeklyreset"] = {
                 ["weeklyreset"] = "", -- SHOULD INCLUDE WHITE SPACE
                 ["today"] = "TODAY",
-                ["in"] = "In ", -- as in "In 2 days" SHOULD INCLUDE WHITE SPACE
-                ["days"] = " days" -- as in "In 2 days" SHOULD INCLUDE WHITE SPACE
+                ["tomorrow"] = "Tomorrow",
+                ["in"] = "In " -- as in "In 2 days" SHOULD INCLUDE WHITE SPACE
             },
             ["dailyreset"] = {
                 ["daily"] = "", -- SHOULD INCLUDE WHITE SPACE
-                ["lessthanhour"] = "Less than an hour",
-                ["in"] = "In ", -- as in "In 2 hours" SHOULD INCLUDE WHITE SPACE
-                ["hours"] = " hours" -- as in "In 2 hours" SHOULD INCLUDE WHITE SPACE
+                ["in"] = "In" -- as in "In 2 hours"
             }
+        },
+        ["mythicplus"] = {
+            ["tier1"] = "Complete one",
+            ["tier4"] = "Complete four",
+            ["tier10"] = "Complete ten",
+        },
+        ["time"] = {
+            ["lessthanhour"] = "Less than an hour",
+            ["minute"] = "minute",
+            ["minutes"] = "minutes",
+            ["hour"] = "hour",
+            ["hours"] = "hours",
+            ["day"] = "day",
+            ["days"] = "days"
         }
     }
 }

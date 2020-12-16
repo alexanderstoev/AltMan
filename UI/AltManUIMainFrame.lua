@@ -17,7 +17,7 @@ function AltMan.UI:InitMainFrame()
 
     AltMan.UI:DrawHeader();
 
-    AltMan.UI:SetBackground(AltMan.frame)
+    AltMan.UI:SetBackground(AltMan.frame, AltMan.constants.presentation.mainFrameGrey)
 end
 
 ----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ function AltMan.UI:DrawHeader()
     -- update the main frame height
     AltMan.UI:IncreaseMainFrameHeight(newFrameHeight);
 
-    AltMan.UI:SetBackground(AltMan.frame.header)
+    AltMan.UI:SetBackground(AltMan.frame.header, AltMan.constants.presentation.headerGrey)
 
     AltMan.frame.header.title = AltMan.frame.header:CreateFontString(nil, nil, "GameFontNormalLarge");
     AltMan.frame.header.title:SetPoint("TOPLEFT", 7, -7);

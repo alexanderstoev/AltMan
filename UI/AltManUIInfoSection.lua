@@ -138,18 +138,16 @@ function AltMan.UI:AddAltsBackground()
     AltMan.frame.altsBackround = {}
     for altKey, alt in Spairs(AltMan.Data.data["alt-data"], CompareAlts) do
         AltMan.frame.altsBackround[altKey] = CreateFrame("frame", "", AltMan.frame);
-        AltMan.frame.altsBackround[altKey]:SetFrameStrata("LOW");
+        AltMan.frame.altsBackround[altKey]:SetFrameStrata("MEDIUM");
         AltMan.frame.altsBackround[altKey]:SetPoint("TOPLEFT", AltMan.frame, "TOPLEFT", index * w + lw, dy);
         AltMan.frame.altsBackround[altKey]:SetWidth(w);
         AltMan.frame.altsBackround[altKey]:SetHeight(wh + dy);
 
-        local altClass = alt.core.class;
-        altClass = string.gsub(altClass, "%s+", ""); -- remove spaces e.g. Demon hunter -> Demonhunter
-        altClass = string.upper(altClass); -- transform to uppercase e.g. Demonhunter -> DEMONHUNTER
-
-        if (math.fmod(index, 2) == 0) then
-            AltMan.UI:SetBackground(AltMan.frame.altsBackround[altKey], 0.1);
+        local grey = AltMan.constants.presentation.evenCharGrey;
+        if (math.fmod((index + 1), 2) == 0) then
+            grey = grey * 2;
         end
+        AltMan.UI:SetBackground(AltMan.frame.altsBackround[altKey], grey);
         index = index + 1
     end
 end
