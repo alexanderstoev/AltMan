@@ -8,7 +8,7 @@ AltMan.DataSources.soulash = function()
 
     -- anima reservoir quest IDs
     -- https://www.wowhead.com/quest=62935/remnants-of-hope
-    local questIDs = {62935}
+    local questIDs = {62935, 62966, 62969, 60146, 62836}
 
     for _, questID in pairs(questIDs) do
 
